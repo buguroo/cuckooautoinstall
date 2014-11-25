@@ -9,6 +9,10 @@ What does that mean? It simply means that you can throw any suspicious file at i
 
 I created this script to avoid waste my time installing Cuckoo Sandbox in Debian Stable. 
 
+Use
+=================
+....
+
 Script features
 =================
 It installs by default cuckoo sandbox with the ALL optional stuff: yara, ssdeep, django ...
