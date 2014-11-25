@@ -39,7 +39,7 @@ It creates the cuckoo user in the system (it is also added to vboxusers group).
 
 It enables mongodb in conf/reporting.conf 
 
-It fix the "TEMPLATE_DIRS setting must be a tuple" error when running python manage.py making a tuple. Replacing at web/web/settings.py:
+It fix the "TEMPLATE_DIRS setting must be a tuple" error when running python manage.py from the DJANGO version >= 1.6. Replacing at web/web/settings.py:
 
         TEMPLATE_DIRS = (
         "templates"
