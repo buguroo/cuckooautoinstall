@@ -149,7 +149,7 @@ Edit config.php and add the cuckoo user:
 
 Start  vboxweb service, in my Virtualbox version (is old) you can use this command:
 
-     vboxwebsrv -H 127.0.0.1
+     vboxwebsrv -H 127.0.0.1 --background
 
 And for new versions:
  
