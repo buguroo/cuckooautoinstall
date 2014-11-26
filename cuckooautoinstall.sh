@@ -6,7 +6,7 @@ echo "-"
 echo cuckooautoinstall Running Version: $SCRIPT_VERSION ....
 echo David Reguera Garcia aka Dreg - buguroo Offensive Security https://buguroo.com/ 
 echo "-"
-echo Contact: dreg@fr33project.org 
+echo Contact: dreg@fr33project.org / dreguera@buguroo.com
 echo "-"
 
 set -x 
