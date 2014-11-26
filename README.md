@@ -27,13 +27,13 @@ Usage
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20django.png)
 
 Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
-* Install Oracle VM VirtualBox Extension Pack: [https://www.virtualbox.org/](https://www.virtualbox.org/)
-* Install Install phpVirtualbox: An open source, AJAX implementation of the VirtualBox user interface written in PHP. As a modern web interface, it allows you to access and control remote VirtualBox instances. phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment - mirroring the VirtualBox GUI through its web interface. [http://sourceforge.net/projects/phpvirtualbox/](http://sourceforge.net/projects/phpvirtualbox/)
-* Install a RDP Client to access to virtual machines (you can use the Windows Remote Desktop client).
+* Install <strong>Oracle VM VirtualBox Extension Pack</strong>: [https://www.virtualbox.org/](https://www.virtualbox.org/)
+* Install Install <strong>phpVirtualbox</strong>: An open source, AJAX implementation of the VirtualBox user interface written in PHP. As a modern web interface, it allows you to access and control remote VirtualBox instances. phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment - mirroring the VirtualBox GUI through its web interface. [http://sourceforge.net/projects/phpvirtualbox/](http://sourceforge.net/projects/phpvirtualbox/)
+* Install a RDP Client to access to virtual machines (you can use the <strong>Windows Remote Desktop client</strong>).
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20access.png)
 
-Install cuckoo as daemon:
+Install <strong>cuckoo as daemon</strong>:
 
 * <strong>apt-get install supervisor</strong>
 * Edit <strong>/etc/supervisor/conf.d/cuckoo.conf</strong> example:
@@ -62,16 +62,17 @@ It tries to solve common problems during the installation: ldconfigs, autoreconf
 
 It installs by default virtualbox and creates the hostonlyif.
 
-It creates the iptables rules and the ip forward to enable internet in the cuckoo virtual machines:
+It creates the <strong>iptables rules</strong> and the ip forward to enable internet in the cuckoo virtual machines:
 
     sudo iptables -A FORWARD -o eth0 -i vboxnet0 -s 192.168.56.0/24 -m conntrack --ctstate NEW -j ACCEPT
     sudo iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
     sudo iptables -A POSTROUTING -t nat -j MASQUERADE
     sudo sysctl -w net.ipv4.ip_forward=1
 
-It enables run tcpdump from nonroot user:
-    sudo apt-get -y install libcap2-bin
-    sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
+It enables run <strong>tcpdump</strong> from nonroot user:
+
+        sudo apt-get -y install libcap2-bin
+        sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
 
 It creates the <strong>'cuckoo'</strong> user in the system and it is also added this user to <string>vboxusers</string> group.
 
