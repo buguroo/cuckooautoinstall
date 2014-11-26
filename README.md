@@ -26,6 +26,42 @@ Usage
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20django.png)
 
+Script features
+=================
+It installs by default Cuckoo sandbox with the ALL optional stuff: yara, ssdeep, django ...
+
+It installs the last versions of: ssdeep, yara, pydeep-master & jansson.
+
+It tries to solve common problems during the installation: ldconfigs, autoreconfs...
+
+It installs by default virtualbox and <strong>creates the hostonlyif</strong>.
+
+It creates the <strong>iptables rules</strong> and the ip forward to enable internet in the cuckoo virtual machines:
+
+    sudo iptables -A FORWARD -o eth0 -i vboxnet0 -s 192.168.56.0/24 -m conntrack --ctstate NEW -j ACCEPT
+    sudo iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+    sudo iptables -A POSTROUTING -t nat -j MASQUERADE
+    sudo sysctl -w net.ipv4.ip_forward=1
+
+It enables run <strong>tcpdump</strong> from nonroot user:
+
+    sudo apt-get -y install libcap2-bin
+    sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
+
+It creates the <strong>'cuckoo'</strong> user in the system and it is also added this user to <strong>vboxusers</strong> group.
+
+It enables <strong>mongodb</strong> in <strong>conf/reporting.conf</strong> 
+
+It fix the <strong>"TEMPLATE_DIRS setting must be a tuple"</strong> error when running python manage.py from the <strong>DJANGO version >= 1.6</strong>. Replacing in <strong>web/web/settings.py</strong>:
+
+        TEMPLATE_DIRS = (
+        "templates"
+        )
+    For:
+        TEMPLATE_DIRS = (
+        ("templates"),
+        )
+
 Remote access to Virtual Machines via RDP + Remote control of VirtualBox (Optional)
 =================
 * Download and install <strong>Oracle VM VirtualBox Extension Pack</strong>: [https://www.virtualbox.org/wiki/Downloads  ](https://www.virtualbox.org/wiki/Downloads  ):
@@ -181,41 +217,6 @@ Install <strong>cuckoo as daemon</strong>:
 
 * Reload supervisor: supervisorctl reload
 
-Script features
-=================
-It installs by default Cuckoo sandbox with the ALL optional stuff: yara, ssdeep, django ...
-
-It installs the last versions of: ssdeep, yara, pydeep-master & jansson.
-
-It tries to solve common problems during the installation: ldconfigs, autoreconfs...
-
-It installs by default virtualbox and <strong>creates the hostonlyif</strong>.
-
-It creates the <strong>iptables rules</strong> and the ip forward to enable internet in the cuckoo virtual machines:
-
-    sudo iptables -A FORWARD -o eth0 -i vboxnet0 -s 192.168.56.0/24 -m conntrack --ctstate NEW -j ACCEPT
-    sudo iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-    sudo iptables -A POSTROUTING -t nat -j MASQUERADE
-    sudo sysctl -w net.ipv4.ip_forward=1
-
-It enables run <strong>tcpdump</strong> from nonroot user:
-
-    sudo apt-get -y install libcap2-bin
-    sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
-
-It creates the <strong>'cuckoo'</strong> user in the system and it is also added this user to <strong>vboxusers</strong> group.
-
-It enables <strong>mongodb</strong> in <strong>conf/reporting.conf</strong> 
-
-It fix the <strong>"TEMPLATE_DIRS setting must be a tuple"</strong> error when running python manage.py from the <strong>DJANGO version >= 1.6</strong>. Replacing in <strong>web/web/settings.py</strong>:
-
-        TEMPLATE_DIRS = (
-        "templates"
-        )
-    For:
-        TEMPLATE_DIRS = (
-        ("templates"),
-        )
 
 TO-DO
 =================
