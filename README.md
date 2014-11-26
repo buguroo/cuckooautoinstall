@@ -63,17 +63,13 @@ It installs by default virtualbox and creates the hostonlyif.
 It creates the iptables rules and the ip forward to enable internet in the cuckoo virtual machines:
 
     sudo iptables -A FORWARD -o eth0 -i vboxnet0 -s 192.168.56.0/24 -m conntrack --ctstate NEW -j ACCEPT
-    
     sudo iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-    
     sudo iptables -A POSTROUTING -t nat -j MASQUERADE
-    
     sudo sysctl -w net.ipv4.ip_forward=1
     
 It enables run tcpdump from nonroot user:
 
     sudo apt-get -y install libcap2-bin
-    
     sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
 
 It creates the cuckoo user in the system (it is also added to vboxusers group).
@@ -89,7 +85,6 @@ It fix the "TEMPLATE_DIRS setting must be a tuple" error when running python man
         TEMPLATE_DIRS = (
         ("templates"),
         )
-
 
 TODO
 =================
