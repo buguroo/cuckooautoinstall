@@ -12,10 +12,9 @@ I created this script to avoid waste my time installing Cuckoo Sandbox in Debian
 
 Usage
 =================
-*  Execute the script:
-**  sh cuckooautoinstall.sh
-
-Cr
+<ol>
+  <li>Execute the script: sh cuckooautoinstall.sh</li>
+</ol>
 
 Script features
 =================
