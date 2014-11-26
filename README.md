@@ -74,7 +74,7 @@ It enables run <strong>tcpdump</strong> from nonroot user:
         sudo apt-get -y install libcap2-bin
         sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
 
-It creates the <strong>'cuckoo'</strong> user in the system and it is also added this user to <string>vboxusers</string> group.
+It creates the <strong>'cuckoo'</strong> user in the system and it is also added this user to <strong>vboxusers</strong> group.
 
 It enables <strong>mongodb</strong> in <strong>conf/reporting.conf</strong> 
 
