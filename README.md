@@ -28,6 +28,7 @@ Usage
 
 Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
 * Install <strong>Oracle VM VirtualBox Extension Pack</strong>: [https://www.virtualbox.org/wiki/Downloads  ](https://www.virtualbox.org/wiki/Downloads  )
+* 
 ** Download the VirtualBox Extension Pack for your Distribution and for your Virtualbox version: <strong>vboxmanage --version</strong>. For example:
 
                 root@cuckoolab3:~# vboxmanage --version
@@ -37,7 +38,9 @@ Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
                 wget http://download.virtualbox.org/virtualbox/4.1.18/virtualbox-4.1_4.1.18-78361~Debian~wheezy_amd64.deb
 
 ** Install the Extension Pack with: <strong>VBoxManage extpack install</strong>. For example for my 4.1.18_Debianr78361: 
+
                 VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.3.2-90405.vbox-extpack
+                
 **
 * Install Install <strong>phpVirtualbox</strong>: An open source, AJAX implementation of the VirtualBox user interface written in PHP. As a modern web interface, it allows you to access and control remote VirtualBox instances. phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment - mirroring the VirtualBox GUI through its web interface. [http://sourceforge.net/projects/phpvirtualbox/](http://sourceforge.net/projects/phpvirtualbox/)
 * Install a RDP Client to access to virtual machines (you can use the <strong>Windows Remote Desktop client</strong>).
