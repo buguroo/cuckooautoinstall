@@ -14,7 +14,7 @@ Usage
 =================
 * Execute the script: <strong>sh cuckooautoinstall.sh</strong>
 * Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/)
-* Execute cuckoo: <strong>cd cuckoo && python cuckoo.py</strong>
+* Execute cuckoo (check the image output): <strong>cd cuckoo && python cuckoo.py</strong>
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20cuckoo%20working.png)
 * Execute also webpy: <strong>cd cuckoo/utils && python web.py</strong>
