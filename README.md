@@ -14,6 +14,7 @@ Usage
 =================
 * Execute the script: <strong>sh cuckooautoinstall.sh</strong>
 * Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/)
+* Configure cuckoo: <strong>cuckoo/conf/cuckoo.conf, cuckoo/conf/auxiliary.conf & cuckoo/conf/virtualbox.conf</strong> 
 * Execute cuckoo (check the image output): <strong>cd cuckoo && python cuckoo.py</strong>
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20cuckoo%20working.png)
@@ -34,7 +35,7 @@ Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
 Install cuckoo as daemon:
 
 * <strong>apt-get install supervisor</strong>
-* Edit <strong>/etc/supervisor/conf.d/cuckoo.conf</strong>
+* Edit <strong>/etc/supervisor/conf.d/cuckoo.conf</strong> example:
 
         [program:cuckoo]
         command=python cuckoo.py
