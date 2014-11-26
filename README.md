@@ -8,7 +8,7 @@ In three words, Cuckoo Sandbox is a malware analysis system.
 
 What does that mean? It simply means that you can throw any suspicious file at it and in a matter of seconds Cuckoo will provide you back some detailed results outlining what such file did when executed inside an isolated environment.
 
-I created this script to avoid waste my time installing Cuckoo Sandbox in Debian Stable. 
+I created this script in [https://buguroo.com/](buguroo Offensive Security) to avoid waste my time installing Cuckoo Sandbox in Debian Stable. 
 
 Usage
 =================
@@ -16,20 +16,20 @@ Usage
 * Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/)
 * Execute cuckoo: <strong>cd cuckoo && python cuckoo.py</strong>
 
-![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20cuckoo%20working.png)
+![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20cuckoo%20working.png)
 * Execute also webpy: <strong>cd cuckoo/utils && python web.py</strong>
 
-![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20webpy.png)
+![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20webpy.png)
 * Execute also django: <strong>cd cuckoo/web && python manage.py runserver 0.0.0.0:6969</strong>
 
-![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20django.png)
+![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20django.png)
 
 Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
 * Install Oracle VM VirtualBox Extension Pack: [https://www.virtualbox.org/](https://www.virtualbox.org/)
 * Install Install phpVirtualbox: An open source, AJAX implementation of the VirtualBox user interface written in PHP. As a modern web interface, it allows you to access and control remote VirtualBox instances. phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment - mirroring the VirtualBox GUI through its web interface. [http://sourceforge.net/projects/phpvirtualbox/](http://sourceforge.net/projects/phpvirtualbox/)
 * Install a RDP Client to access to virtual machines.
 
-![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20access.png)
+![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20access.png)
 
 
 Script features
