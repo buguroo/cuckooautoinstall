@@ -21,7 +21,7 @@ Usage
 
 ![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20webpy.png)
 * Execute also django: <strong>cd cuckoo/web && python manage.py runserver 0.0.0.0:6969</strong>
-*
+
 ![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20django.png)
 
 Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
