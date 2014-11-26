@@ -27,21 +27,114 @@ Usage
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20django.png)
 
 Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
-* Install <strong>Oracle VM VirtualBox Extension Pack</strong>: [https://www.virtualbox.org/wiki/Downloads  ](https://www.virtualbox.org/wiki/Downloads  )
+* Download and install <strong>Oracle VM VirtualBox Extension Pack</strong>: [https://www.virtualbox.org/wiki/Downloads  ](https://www.virtualbox.org/wiki/Downloads  ):
 
 Download the VirtualBox Extension Pack for your Distribution and for your Virtualbox version: <strong>vboxmanage --version</strong>. For example:
 
                 root@cuckoolab3:~# vboxmanage --version
                 4.1.18_Debianr78361
-                #(found this version in https://www.virtualbox.org/wiki/Download_Old_Builds_4_1)
-                #(I am using a 64 bit system)
-                wget http://download.virtualbox.org/virtualbox/4.1.18/virtualbox-4.1_4.1.18-78361~Debian~wheezy_amd64.deb
+                #(found this version in Extension Pack Link for All Platforms, in VirtualBox 4.1.18:  https://www.virtualbox.org/wiki/Download_Old_Builds_4_1)
+                wget http://download.virtualbox.org/virtualbox/4.1.18/Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
 
 Install the Extension Pack with: <strong>VBoxManage extpack install</strong>. For example for my 4.1.18_Debianr78361: 
 
-                VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.3.2-90405.vbox-extpack
+                VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
                 
-* Install Install <strong>phpVirtualbox</strong>: An open source, AJAX implementation of the VirtualBox user interface written in PHP. As a modern web interface, it allows you to access and control remote VirtualBox instances. phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment - mirroring the VirtualBox GUI through its web interface. [http://sourceforge.net/projects/phpvirtualbox/](http://sourceforge.net/projects/phpvirtualbox/)
+Create the file /etc/default/virtualbox and add the user. I am using the user 'cuckoo' created by the script, this user must be in vboxusers: 
+
+                                VBOXWEB_USER=cuckoo
+
+* Download and install <strong>phpVirtualbox</strong>: An open source, AJAX implementation of the VirtualBox user interface written in PHP. As a modern web interface, it allows you to access and control remote VirtualBox instances. phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment - mirroring the VirtualBox GUI through its web interface. [http://sourceforge.net/projects/phpvirtualbox/](http://sourceforge.net/projects/phpvirtualbox/)
+
+Install dependences:
+
+                apt-get install nginx php5-common php5-mysql php5-fpm php-pear unzip
+                
+Start nginx:
+
+                /etc/init.d/nginx start
+                
+Edit /etc/nginx/sites-available/default:
+
+                server {
+                        listen   80; ## listen for ipv4; this line is default and implied
+                        listen   [::]:80 default ipv6only=on; ## listen for ipv6
+                
+                        root /usr/share/nginx/www;
+                        index index.php index.html index.htm;
+                
+                        # Make site accessible from http://localhost/
+                        server_name _;
+                
+                        location / {
+                                # First attempt to serve request as file, then
+                                # as directory, then fall back to index.html
+                                try_files $uri $uri/ /index.html;
+                                # Uncomment to enable naxsi on this location
+                                # include /etc/nginx/naxsi.rules
+                        }
+                
+                        location /doc/ {
+                                alias /usr/share/doc/;
+                                autoindex on;
+                                allow 127.0.0.1;
+                                deny all;
+                        }
+                
+                        # Only for nginx-naxsi : process denied requests
+                        #location /RequestDenied {
+                                # For example, return an error code
+                                #return 418;
+                        #}
+                
+                        #error_page 404 /404.html;
+                
+                        # redirect server error pages to the static page /50x.html
+                        #
+                        error_page 500 502 503 504 /50x.html;
+                        location = /50x.html {
+                                root /usr/share/nginx/www;
+                        }
+                
+                        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+                        #
+                        location ~ \.php$ {
+                                try_files $uri =404;
+                                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                                fastcgi_pass unix:/var/run/php5-fpm.sock;
+                                fastcgi_index index.php;
+                                include fastcgi_params;
+                        }
+                
+                        # deny access to .htaccess files, if Apache's document root
+                        # concurs with nginx's one
+                        #
+                        location ~ /\.ht {
+                                deny all;
+                        }
+                }
+                
+Reload nginx config:
+
+                /etc/init.d/nginx reload
+
+Install the last phpVirtualBox and extract it in the nginx web:
+
+                cd /usr/share/nginx/www
+                 wget -c -L http://sourceforge.net/projects/phpvirtualbox/files/latest/download?source=files -O phpvirtualbox.zip
+                 unzip phpvirtualbox.zip
+
+Copy the config sample like default config:
+
+                cp config.php-example config.php
+                
+Edit config.php and add the cuckoo user:
+
+                var $username = 'cuckoo';
+                var $password = '12345';
+                
+Access to the phpvirtualbox web, the default password and user is <strong>admin</strong>
+
 * Install a RDP Client to access to virtual machines (you can use the <strong>Windows Remote Desktop client</strong>).
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20access.png)
