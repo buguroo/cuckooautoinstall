@@ -14,7 +14,7 @@ Usage
 =================
 * Execute the script: <strong>sh cuckooautoinstall.sh</strong>
 * Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/)
-* Configure cuckoo: <strong>cuckoo/conf/cuckoo.conf, cuckoo/conf/auxiliary.conf & cuckoo/conf/virtualbox.conf</strong> 
+* Configure cuckoo: <strong>[cuckoo/conf/cuckoo.conf](http://docs.cuckoosandbox.org/en/latest/installation/host/configuration/#cuckoo-conf), [cuckoo/conf/auxiliary.conf](http://docs.cuckoosandbox.org/en/latest/installation/host/configuration/#auxiliary-conf) & [cuckoo/conf/virtualbox.conf](http://docs.cuckoosandbox.org/en/latest/installation/host/configuration/#machinery-conf)</strong> 
 * Execute cuckoo (check the image output): <strong>cd cuckoo && python cuckoo.py</strong>
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20cuckoo%20working.png)
