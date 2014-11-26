@@ -61,6 +61,7 @@ It tries to solve common problems during the installation: ldconfigs, autoreconf
 It installs by default virtualbox and creates the hostonlyif.
 
 It creates the iptables rules and the ip forward to enable internet in the cuckoo virtual machines:
+
     sudo iptables -A FORWARD -o eth0 -i vboxnet0 -s 192.168.56.0/24 -m conntrack --ctstate NEW -j ACCEPT
     sudo iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
     sudo iptables -A POSTROUTING -t nat -j MASQUERADE
