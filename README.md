@@ -1,6 +1,6 @@
 cuckooautoinstall
 =================
-Auto Installer Script for Cuckoo Sandbox: http://cuckoosandbox.org/
+Auto Installer Script for Cuckoo Sandbox: [html-pipeline](http://cuckoosandbox.org/)
 
 What is Cuckoo Sandbox?
 
@@ -13,7 +13,7 @@ I created this script to avoid waste my time installing Cuckoo Sandbox in Debian
 Usage
 =================
 *  Execute the script:
-        sh cuckooautoinstall.sh
+**  sh cuckooautoinstall.sh
 
 Cr
 
