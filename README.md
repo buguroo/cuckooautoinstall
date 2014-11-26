@@ -31,6 +31,26 @@ Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20access.png)
 
+Install cuckoo as daemon:
+
+* <strong>apt-get install supervisor</strong>
+* Edit <strong>/etc/supervisor/conf.d/cuckoo.conf</strong>
+
+[program:cuckoo]
+command=python cuckoo.py
+directory=/home/cuckoo
+User=cuckoo
+[program:cuckoo-web]
+command=python web.py
+directory=/home/cuckoo/utils
+user=cuckoo[program:cuckoo-api]
+command=python api.py
+directory=/home/cuckoo/utils
+user=cuckoo
+
+* Reload supervisor: supervisorctl reload
+
+
 
 Script features
 =================
