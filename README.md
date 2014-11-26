@@ -15,9 +15,13 @@ Usage
 * Execute the script: <strong>sh cuckooautoinstall.sh</strong>
 * Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/)
 * Execute cuckoo: <strong>cd cuckoo && python cuckoo.py</strong>
+
+![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20cuckoo%20working.png)
 * Execute also webpy: <strong>cd cuckoo/utils && python web.py</strong>
+
 ![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20webpy.png)
 * Execute also django: <strong>cd cuckoo/web && python manage.py runserver 0.0.0.0:6969</strong>
+*
 ![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20django.png)
 
 Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
