@@ -60,7 +60,7 @@ It installs the last versions of: ssdeep, yara, pydeep-master & jansson.
 
 It tries to solve common problems during the installation: ldconfigs, autoreconfs...
 
-It installs by default virtualbox and creates the hostonlyif.
+It installs by default virtualbox and <strong>creates the hostonlyif</strong>.
 
 It creates the <strong>iptables rules</strong> and the ip forward to enable internet in the cuckoo virtual machines:
 
@@ -76,9 +76,9 @@ It enables run <strong>tcpdump</strong> from nonroot user:
 
 It creates the <strong>'cuckoo'</strong> user in the system and it is also added this user to <string>vboxusers</string> group.
 
-It enables mongodb in conf/reporting.conf 
+It enables <strong>mongodb</strong> in <strong>conf/reporting.conf</strong> 
 
-It fix the <strong>"TEMPLATE_DIRS setting must be a tuple"</strong> error when running python manage.py from the DJANGO version >= 1.6. Replacing in web/web/settings.py:
+It fix the <strong>"TEMPLATE_DIRS setting must be a tuple"</strong> error when running python manage.py from the <strong>DJANGO version >= 1.6</strong>. Replacing in <strong>web/web/settings.py</strong>:
 
         TEMPLATE_DIRS = (
         "templates"
