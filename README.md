@@ -50,8 +50,6 @@ user=cuckoo
 
 * Reload supervisor: supervisorctl reload
 
-
-
 Script features
 =================
 It installs by default cuckoo sandbox with the ALL optional stuff: yara, ssdeep, django ...
