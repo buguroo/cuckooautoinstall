@@ -26,7 +26,7 @@ Usage
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20django.png)
 
-Remote access to Virtual Machines via RDP + Remote control of VirtualBox
+Remote access to Virtual Machines via RDP + Remote control of VirtualBox (Optional)
 =================
 * Download and install <strong>Oracle VM VirtualBox Extension Pack</strong>: [https://www.virtualbox.org/wiki/Downloads  ](https://www.virtualbox.org/wiki/Downloads  ):
 
