@@ -8,13 +8,13 @@ In three words, Cuckoo Sandbox is a malware analysis system.
 
 What does that mean? It simply means that you can throw any suspicious file at it and in a matter of seconds Cuckoo will provide you back some detailed results outlining what such file did when executed inside an isolated environment.
 
-I created this script in [buguroo Offensive Security](https://buguroo.com/) to avoid waste my time installing Cuckoo Sandbox in Debian Stable. 
+I created this script in [Buguroo Offensive Security](https://buguroo.com/) to avoid wasting my time installing Cuckoo Sandbox in Debian Stable. 
 
 Usage
 =================
 * Execute the script: <strong>sh cuckooautoinstall.sh</strong>
 * Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/) or import virtual machines using <strong>VBoxManage import virtual_machine.ova</strong>
-* Add to the virtual machines HostOnly with vboxnet0: <strong>vboxmanage modifyvm “virtual_machine" --hostonlyadapter1 vboxnet0</strong> (use this command to list the VMs: <strong>VBoxManage list vms</strong>)
+* Add to the virtual machines with HostOnly option using vboxnet0: <strong>vboxmanage modifyvm “virtual_machine" --hostonlyadapter1 vboxnet0</strong> (use this command to list the VMs: <strong>VBoxManage list vms</strong>)
 * Configure cuckoo: <strong>[cuckoo/conf/cuckoo.conf](http://docs.cuckoosandbox.org/en/latest/installation/host/configuration/#cuckoo-conf), [cuckoo/conf/auxiliary.conf](http://docs.cuckoosandbox.org/en/latest/installation/host/configuration/#auxiliary-conf) & [cuckoo/conf/virtualbox.conf](http://docs.cuckoosandbox.org/en/latest/installation/host/configuration/#machinery-conf)</strong> 
 * Execute cuckoo (check the image output): <strong>cd cuckoo && python cuckoo.py</strong>
 
@@ -29,7 +29,7 @@ Usage
 Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
 * Install Oracle VM VirtualBox Extension Pack: [https://www.virtualbox.org/](https://www.virtualbox.org/)
 * Install Install phpVirtualbox: An open source, AJAX implementation of the VirtualBox user interface written in PHP. As a modern web interface, it allows you to access and control remote VirtualBox instances. phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment - mirroring the VirtualBox GUI through its web interface. [http://sourceforge.net/projects/phpvirtualbox/](http://sourceforge.net/projects/phpvirtualbox/)
-* Install a RDP Client to access to virtual machines.
+* Install a RDP Client to access to virtual machines (you can use the Windows Remote Desktop client).
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20access.png)
 
@@ -54,7 +54,7 @@ Install cuckoo as daemon:
 
 Script features
 =================
-It installs by default cuckoo sandbox with the ALL optional stuff: yara, ssdeep, django ...
+It installs by default Cuckoo sandbox with the ALL optional stuff: yara, ssdeep, django ...
 
 It installs the last versions of: ssdeep, yara, pydeep-master & jansson.
 
@@ -73,25 +73,25 @@ It enables run tcpdump from nonroot user:
     sudo apt-get -y install libcap2-bin
     sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
 
-It creates the cuckoo user in the system (it is also added to vboxusers group).
+It creates the 'cuckoo' user in the system and it is also added this user to vboxusers group.
 
 It enables mongodb in conf/reporting.conf 
 
-It fix the "TEMPLATE_DIRS setting must be a tuple" error when running python manage.py from the DJANGO version >= 1.6. Replacing at web/web/settings.py:
+It fix the <strong>"TEMPLATE_DIRS setting must be a tuple"</strong> error when running python manage.py from the DJANGO version >= 1.6. Replacing in web/web/settings.py:
 
         TEMPLATE_DIRS = (
         "templates"
         )
-    with:
+    For:
         TEMPLATE_DIRS = (
         ("templates"),
         )
 
-TODO
+TO-DO
 =================
 * Add support for more Linux Distributions.
 * Improve the script (sorry for my bad Bash skills).
-* Add args to enable and disable functions like: no install django, no enable mongodb, select virtualbox/kvm installation, apply only a workarround patch (like the django patch) etc.
+* Add arguments to the script in order to enable and disable things like: do not install django, do not enable mongodb, select virtualbox, vmware or kvm installation, apply or not apply a workarround patch (ex: django patch) etc.
 * Test the script in more environments
 * ...
 
