@@ -75,14 +75,14 @@ It fix the "TEMPLATE_DIRS setting must be a tuple" error when running python man
 
 TODO
 =================
-Add support for more Linux Distributions.
+* Add support for more Linux Distributions.
 
-Improve the script (sorry for my bad Bash skills).
+* Improve the script (sorry for my bad Bash skills).
 
-Add args to enable and disable functions like: no install django, no enable mongodb, select virtualbox/kvm installation, apply only a workarround patch (like the django patch) etc.
+* Add args to enable and disable functions like: no install django, no enable mongodb, select virtualbox/kvm installation, apply only a workarround patch (like the django patch) etc.
 
-Test the script in more environments
+* Test the script in more environments
 
-...
+* ...
 
 Pull requests are always well come :D
