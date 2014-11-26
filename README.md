@@ -16,6 +16,7 @@ Usage
   <li>Execute the script: <strong>sh cuckooautoinstall.sh</strong></li>
 </ol>
 
+
 Script features
 =================
 It installs by default cuckoo sandbox with the ALL optional stuff: yara, ssdeep, django ...
