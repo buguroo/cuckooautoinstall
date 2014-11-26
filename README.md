@@ -32,28 +32,28 @@ Remote access to Virtual Machines via RDP + Remote control of VirtualBox
 
 Download the VirtualBox Extension Pack for your Distribution and for your Virtualbox version: <strong>vboxmanage --version</strong>. For example:
 
-                root@cuckoolab3:~# vboxmanage --version
-                4.1.18_Debianr78361
-                #(found this version in Extension Pack Link for All Platforms, in VirtualBox 4.1.18:  https://www.virtualbox.org/wiki/Download_Old_Builds_4_1)
-                wget http://download.virtualbox.org/virtualbox/4.1.18/Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
+    root@cuckoolab3:~# vboxmanage --version
+    4.1.18_Debianr78361
+    #(found this version in Extension Pack Link for All Platforms, in VirtualBox 4.1.18:  https://www.virtualbox.org/wiki/Download_Old_Builds_4_1)
+    wget http://download.virtualbox.org/virtualbox/4.1.18/Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
 
 Install the Extension Pack with: <strong>VBoxManage extpack install</strong>. For example for my 4.1.18_Debianr78361: 
 
-                VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
+    VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
                 
 Create the file /etc/default/virtualbox and add the user. I am using the user 'cuckoo' created by the script, this user must be in vboxusers: 
 
-                                VBOXWEB_USER=cuckoo
+    VBOXWEB_USER=cuckoo
 
 * Download and install <strong>phpVirtualbox</strong>: An open source, AJAX implementation of the VirtualBox user interface written in PHP. As a modern web interface, it allows you to access and control remote VirtualBox instances. phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment - mirroring the VirtualBox GUI through its web interface. [http://sourceforge.net/projects/phpvirtualbox/](http://sourceforge.net/projects/phpvirtualbox/)
 
 Install dependences:
 
-                apt-get install nginx php5-common php5-mysql php5-fpm php-pear unzip
+    apt-get install nginx php5-common php5-mysql php5-fpm php-pear unzip
                 
 Start nginx:
 
-                /etc/init.d/nginx start
+    /etc/init.d/nginx start
                 
 Edit /etc/nginx/sites-available/default:
 
@@ -117,13 +117,26 @@ Edit /etc/nginx/sites-available/default:
                 
 Reload nginx config:
 
-                /etc/init.d/nginx reload
+    /etc/init.d/nginx reload
 
-Install the last phpVirtualBox and extract it in the nginx web:
+Install the last phpVirtualBox and extract it in the nginx web.
 
-                cd /usr/share/nginx/www
-                 wget -c -L http://sourceforge.net/projects/phpvirtualbox/files/latest/download?source=files -O phpvirtualbox.zip
-                 unzip phpvirtualbox.zip
+phpVirtualBox versioning is aligned with VirtualBox versioning in that the major and minor release numbers will maintain compatibility. 
+
+    phpVirtualBox 4.0-x will always be compatible with VirtualBox 4.0.x. Regardless of what the latest x revision is.     phpVirtualBox 4.2-x will always be compatible with VirtualBox 4.2.x, etc.. *) 
+    for VirtualBox 4.3 - phpvirtualbox-4.3-x.zip *) 
+    for VirtualBox 4.2 - phpvirtualbox-4.2-x.zip *)
+    for VirtualBox 4.1 - phpvirtualbox-4.1-x.zip *)
+    for VirtualBox 4.0 - phpvirtualbox-4.0-x.zip *) 
+    ...
+
+I am using Virtualbox 4.1.18_Debianr78361 and I found a version for this in: [http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/](http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/) phpvirtualbox-4.1-11.zip
+
+Extract phpvirtualbox in the nginx public web path:
+
+    cd /usr/share/nginx/www
+    wget -L -c http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/phpvirtualbox-4.1-11.zip/download -O phpvirtualbox.zip
+    nzip phpvirtualbox.zip
 
 Copy the config sample like default config:
 
@@ -178,8 +191,8 @@ It creates the <strong>iptables rules</strong> and the ip forward to enable inte
 
 It enables run <strong>tcpdump</strong> from nonroot user:
 
-        sudo apt-get -y install libcap2-bin
-        sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
+    sudo apt-get -y install libcap2-bin
+    sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
 
 It creates the <strong>'cuckoo'</strong> user in the system and it is also added this user to <strong>vboxusers</strong> group.
 
