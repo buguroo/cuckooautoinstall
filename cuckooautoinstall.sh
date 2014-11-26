@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# David Reguera Garcia aka Dreg - buguroo Offensive Security https://buguroo.com/
-# dreg@fr33project.org 
-
 SCRIPT_VERSION=0.1
 
 echo "-"
 echo cuckooautoinstall Running Version: $SCRIPT_VERSION ....
+echo David Reguera Garcia aka Dreg - buguroo Offensive Security https://buguroo.com/ 
+echo "-"
+echo Contact: dreg@fr33project.org 
 echo "-"
 
 set -x 
