@@ -1,6 +1,7 @@
 cuckooautoinstall
 =================
 Auto Installer Script for Cuckoo Sandbox: http://cuckoosandbox.org/
+
 What is Cuckoo Sandbox?
 
 In three words, Cuckoo Sandbox is a malware analysis system.
@@ -9,17 +10,20 @@ What does that mean? It simply means that you can throw any suspicious file at i
 
 I created this script to avoid waste my time installing Cuckoo Sandbox in Debian Stable. 
 
-Use
+Usage
 =================
-....
+*  Execute the script:
+        sh cuckooautoinstall.sh
+
+Cr
 
 Script features
 =================
 It installs by default cuckoo sandbox with the ALL optional stuff: yara, ssdeep, django ...
 
-It uses the last version of: ssdeep, yara, pydeep-master & jansson.
+It installs the last versions of: ssdeep, yara, pydeep-master & jansson.
 
-It try to solve common problems during the installation: ldconfigs, autoreconfs...
+It tries to solve common problems during the installation: ldconfigs, autoreconfs...
 
 It installs by default virtualbox and creates the hostonlyif.
 
