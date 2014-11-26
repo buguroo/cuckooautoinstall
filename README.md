@@ -132,22 +132,22 @@ phpVirtualBox versioning is aligned with VirtualBox versioning in that the major
 
 I am using Virtualbox 4.1.18_Debianr78361 and I found a version for this in: [http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/](http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/) phpvirtualbox-4.1-11.zip
 
-Extract phpvirtualbox in the nginx public web path:
+Download and extract the CORRECT phpvirtualbox version in the nginx public web path:
 
     cd /usr/share/nginx/www
-    wget -L -c http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/phpvirtualbox-4.1-11.zip/download -O phpvirtualbox.zip
-    nzip phpvirtualbox.zip
+    wget -L -c http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/phpvirtualbox-4.1-11.zip/download -O phpvirtualbox.zip 
+    unzip phpvirtualbox.zip
 
 Copy the config sample like default config:
 
-                cp config.php-example config.php
-                
+    cp config.php-example config.php
+
 Edit config.php and add the cuckoo user:
 
-                var $username = 'cuckoo';
-                var $password = '12345';
+    var $username = 'cuckoo';
+    var $password = '12345';
                 
-Access to the phpvirtualbox web, the default password and user is <strong>admin</strong>
+Access to the phpvirtualbox web, the default password and user is <strong>admin</strong>.
 
 * Install a RDP Client to access to virtual machines (you can use the <strong>Windows Remote Desktop client</strong>).
 
