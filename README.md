@@ -14,13 +14,11 @@ Usage
 =================
 * Execute the script: <strong>sh cuckooautoinstall.sh</strong>
 * Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/)
-* webpy: cd cuckoo/utils && python web.py
-* (https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20webpy.png)
-  <li>django: cd cuckoo/web && python manage.py runserver 0.0.0.0:6969
-  ![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20django.png)</li>
-  <li></li>
-
-</ol>
+* Execute cuckoo: <strong>cd cuckoo && python cuckoo.py</strong>
+* Execute also webpy: <strong>cd cuckoo/utils && python web.py</strong>
+![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20webpy.png)
+* Execute also django: <strong>cd cuckoo/web && python manage.py runserver 0.0.0.0:6969</strong>
+![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20django.png)
 
 Remote access to Virtual Machines via RDP + Remote control of VirtualBox :
 * Install Oracle VM VirtualBox Extension Pack: [https://www.virtualbox.org/](https://www.virtualbox.org/)
