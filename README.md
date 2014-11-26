@@ -13,7 +13,7 @@ I created this script to avoid waste my time installing Cuckoo Sandbox in Debian
 Usage
 =================
 <ol>
-  <li>Execute the script: sh cuckooautoinstall.sh</li>
+  <li>Execute the script: <strong>sh cuckooautoinstall.sh</strong></li>
 </ol>
 
 Script features
