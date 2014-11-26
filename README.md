@@ -146,8 +146,17 @@ Edit config.php and add the cuckoo user:
 
     var $username = 'cuckoo';
     var $password = '12345';
-                
-Access to the phpvirtualbox web, the default password and user is <strong>admin</strong>.
+
+Start  vboxweb service, in my Virtualbox version (is old) you can use this command:
+
+     vboxwebsrv -H 127.0.0.1
+
+And for new versions:
+ 
+    VBoxManage setproperty websrvauthlibrary default
+    /etc/init.d/vboxweb-service restart
+
+Access to the phpvirtualbox web, the default password and user for the web is <strong>admin</strong>.
 
 * Install a RDP Client to access to virtual machines (you can use the <strong>Windows Remote Desktop client</strong>).
 
@@ -212,7 +221,7 @@ TO-DO
 =================
 * Add support for more Linux Distributions.
 * Improve the script (sorry for my bad Bash skills).
-* Add arguments to the script in order to enable and disable things like: do not install django, do not enable mongodb, select virtualbox, vmware or kvm installation, apply or do not apply a workarround patch (ex: django patch) etc.
+* Add arguments to the script in order to enable and disable things like: do not install django, do not enable mongodb, install phpvirtualbox, select virtualbox, vmware or kvm installation, apply or do not apply a workarround patch (ex: django patch) etc.
 * Test the script in more environments
 * ...
 
