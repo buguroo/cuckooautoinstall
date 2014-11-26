@@ -14,6 +14,10 @@ Usage
 =================
 <ol>
   <li>Execute the script: <strong>sh cuckooautoinstall.sh</strong></li>
+  <li>Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/)</li>
+  <ol>
+    <li>Optional:</li>
+  </ol>
 </ol>
 
 
