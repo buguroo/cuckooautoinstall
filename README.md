@@ -15,10 +15,20 @@ Usage
 <ol>
   <li>Execute the script: <strong>sh cuckooautoinstall.sh</strong></li>
   <li>Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/)</li>
-  <ol>
-    * Optional:
-  </ol>
+  <li></li>
+
 </ol>
+
+Remote Access via RDP:
+* Oracle VM VirtualBox Extension Pack: [https://www.virtualbox.org/](https://www.virtualbox.org/)
+
+Install phpVirtualbox: An open source, AJAX implementation of the VirtualBox user interface written in PHP. As a modern web interface, it allows you to access and control remote VirtualBox instances. phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment - mirroring the VirtualBox GUI through its web interface. [http://sourceforge.net/projects/phpvirtualbox/](http://sourceforge.net/projects/phpvirtualbox/)
+
+Install / Use a RDP Client to access to virtual machines.
+
+![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20access.png)
+
+
 
 
 Script features
