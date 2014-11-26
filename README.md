@@ -91,7 +91,7 @@ TO-DO
 =================
 * Add support for more Linux Distributions.
 * Improve the script (sorry for my bad Bash skills).
-* Add arguments to the script in order to enable and disable things like: do not install django, do not enable mongodb, select virtualbox, vmware or kvm installation, apply or not apply a workarround patch (ex: django patch) etc.
+* Add arguments to the script in order to enable and disable things like: do not install django, do not enable mongodb, select virtualbox, vmware or kvm installation, apply or do not apply a workarround patch (ex: django patch) etc.
 * Test the script in more environments
 * ...
 
