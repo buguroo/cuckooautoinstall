@@ -15,8 +15,8 @@ Usage
 <ol>
   <li>Execute the script: <strong>sh cuckooautoinstall.sh</strong></li>
   <li>Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/)</li>
-  <li>webpy: cd cuckoo/utils && python web.py
-  ![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20webpy.png)</li>
+  <li>webpy: cd cuckoo/utils && python web.py</li>
+  ![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20webpy.png)
   <li>django: cd cuckoo/web && python manage.py runserver 0.0.0.0:6969
   ![ScreenShot](https://github.com/David-Reguera-Garcia-Dreg/cuckooautoinstall/blob/master/github%20django.png)</li>
   <li></li>
