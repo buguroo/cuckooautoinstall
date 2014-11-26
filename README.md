@@ -1,6 +1,6 @@
 cuckooautoinstall
 =================
-Auto Installer Script for Cuckoo Sandbox: [html-pipeline](http://cuckoosandbox.org/)
+Auto Installer Script for Cuckoo Sandbox: [http://cuckoosandbox.org/](http://cuckoosandbox.org/)
 
 What is Cuckoo Sandbox?
 
