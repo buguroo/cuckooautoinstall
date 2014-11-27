@@ -221,6 +221,10 @@ Install <strong>cuckoo as daemon</strong>:
 
 Import OVF (.OVA) Virtual Machines
 =================
+Read first: http://docs.cuckoosandbox.org/en/latest/installation/guest/
+
+Normally I create the Virtual Machine from my Windows and after I export the virtual machine using the file menu in Virtual Box. I export using the OVF format (.OVA). Then I copy the virtual machine to my server using sftp and
+
 You can use the <strong>VBoxManage import</strong> command to import a virtual machine. Use the user created for cuckoo. For example to import my Virtual Machine "windows_7.ova" created from VirtualBox in Windows:
 
     su cuckoo
@@ -272,9 +276,15 @@ Making the screenshot using the user created for cuckoo. For my windows_7 virtua
     VBoxManage controlvm "windows_7" poweroff
     VBoxManage snapshot "windows_7" restorecurrent
 
+Add the new virtual machine with the new snapshoot and with the static IP address to the <strong>conf/virtualbox.conf:</strong>:
 
-
-
+    machines = cuckoo1
+    [cuckoo1]
+    label = windows_7
+    platform = Windows
+    ip = 192.168.56.130
+    snapshot = cuckoosnap
+    interface = vboxnet0
 
 TO-DO
 =================
