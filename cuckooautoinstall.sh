@@ -41,11 +41,7 @@ echo $OS $VER $ARCH $CODENAME
 if [ "debian" = $OS ];
 then
     echo Debian...
-    sudo apt-get -y install python pip
-    sudo apt-get -y install mongodb
-    sudo apt-get -y install python-sqlalchemy python-bson
-    sudo apt-get -y install python-dpkt python-jinja2 python-magic python-pymongo python-gridfs python-libvirt python-bottle python-pefile python-chardet
-    sudo apt-get -y install python-pip
+    sudo apt-get -y install python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet
     sudo pip install django
     sudo pip install pymongo -U
     sudo apt-get -y install git
