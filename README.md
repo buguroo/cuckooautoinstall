@@ -234,7 +234,47 @@ If you are using phpVirtualbox with a old VirtualBox version and you are running
 Configure HostOnly adapter to the virtual machine, you can list your virtual machines with the <strong>VBoxManage list vms</strong> command. Use the user created for cuckoo. For my Windows_7 virtual machine:
 
     su cuckoo
-    vboxmanage modifyvm “windows_7" --hostonlyadapter1 vboxnet0
+    vboxmanage modifyvm "windows_7" --hostonlyadapter1 vboxnet0
+    
+Start the virtual machine with <strong>vboxmanage startvm</strong> command. Use the user created for cuckoo. Example:
+
+    su cuckoo
+    vboxmanage startvm "windows_7" --type headless
+    
+Check when the cuckoo's agent.py is running I use ping + telnet. For example my <strong>static IP</strong> of the virtual machine is 192.168.56.130 and I am using the default agent.py port:
+
+    cuckoo@:~/VMS$ cuckoo@cuckoolab3:~/VMS$ while ! ping -c 1 192.168.56.130; do echo -; done; echo Virtual Machine Online!
+        PING 192.168.56.130 (192.168.56.130) 56(84) bytes of data.
+        From 192.168.56.1 icmp_seq=1 Destination Host Unreachable
+        
+        --- 192.168.56.130 ping statistics ---
+        1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms
+        ...
+        -
+        PING 192.168.56.130 (192.168.56.130) 56(84) bytes of data.
+        64 bytes from 192.168.56.130: icmp_req=1 ttl=128 time=999 ms
+        
+        --- 192.168.56.130 ping statistics ---
+        1 packets transmitted, 1 received, 0% packet loss, time 0ms
+        rtt min/avg/max/mdev = 999.965/999.965/999.965/0.000 ms
+        Virtual Machine Online!
+    cuckoo@:~/VMS$ telnet 192.168.56.130 8000
+        Trying 192.168.56.130...
+        Connected to 192.168.56.130.
+        Escape character is '^]'.
+    
+Now you can access to the virtual machine via RDP for example to minimize the agent.py script, check if the internet works etc...
+
+Making the screenshot using the user created for cuckoo. For my windows_7 virtual machine I want create a snapshoot called cuckoosnap:
+
+    su cuckoo
+    VBoxManage snapshot "windows_7" take "cuckoosnap" --pause
+    VBoxManage controlvm "windows_7" poweroff
+    VBoxManage snapshot "windows_7" restorecurrent
+
+
+
+
 
 TO-DO
 =================
