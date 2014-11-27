@@ -194,6 +194,8 @@ And for new versions:
 
 Access to the phpvirtualbox web, the default password and user for the web is <strong>admin</strong>.
 
+For common issues and problems visit: http://sourceforge.net/p/phpvirtualbox/wiki/Common phpVirtualBox Errors and Issues/
+
 * Install a RDP Client to access to virtual machines (you can use the <strong>Windows Remote Desktop client</strong>).
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20access.png)
@@ -217,6 +219,11 @@ Install <strong>cuckoo as daemon</strong>:
 
 * Reload supervisor: supervisorctl reload
 
+Import OVF (.OVA) Virtual Machines
+=================
+You can use the VBoxManage import command to import a virtual machine. For example to import my Virtual Machine "Windows_7.ova" created from VirtualBox in Windows:
+
+    VBoxManage import Windows_7.ova
 
 TO-DO
 =================
