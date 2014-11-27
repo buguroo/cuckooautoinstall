@@ -88,11 +88,11 @@ Create the file /etc/default/virtualbox and add the user. I am using the user 'c
 
 Install dependences:
 
-    apt-get install nginx php5-common php5-mysql php5-fpm php-pear unzip
+    sudo apt-get install nginx php5-common php5-mysql php5-fpm php-pear unzip
                 
 Start nginx:
 
-    /etc/init.d/nginx start
+    sudo /etc/init.d/nginx start
                 
 Edit /etc/nginx/sites-available/default:
 
@@ -156,7 +156,7 @@ Edit /etc/nginx/sites-available/default:
                 
 Reload nginx config:
 
-    /etc/init.d/nginx reload
+    sudo /etc/init.d/nginx reload
 
 Install the last phpVirtualBox and extract it in the nginx web.
 
@@ -174,12 +174,13 @@ I am using Virtualbox 4.1.18_Debianr78361 and I found a version for my version: 
 Download and extract the CORRECT phpvirtualbox version for your Virtualbox version in the nginx public web path:
 
     cd /usr/share/nginx/www
-    wget -L -c http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/phpvirtualbox-4.1-11.zip/download -O phpvirtualbox.zip 
-    unzip phpvirtualbox.zip
+    sudo wget -L -c http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/phpvirtualbox-4.1-11.zip/download -O phpvirtualbox.zip 
+    sudo unzip phpvirtualbox.zip
 
 Copy the config sample like default config:
 
-    cp config.php-example config.php
+    cd phpvirtualbox-4.1-11
+    sudo cp config.php-example config.php
 
 Edit config.php and add the cuckoo user:
 
@@ -188,12 +189,13 @@ Edit config.php and add the cuckoo user:
 
 Start vboxweb service using the <strong>same user of the config.php</strong> of the phpVirtualbox. In my (old) Virtualbox version you can use this command:
 
-     vboxwebsrv -H 127.0.0.1 --background
+    su cuckoo
+    vboxwebsrv -H 127.0.0.1 --background
 
 And for new versions:
  
-    VBoxManage setproperty websrvauthlibrary default
-    /etc/init.d/vboxweb-service restart
+    sudo VBoxManage setproperty websrvauthlibrary default
+    sudo /etc/init.d/vboxweb-service restart
 
 Access to the phpvirtualbox web, the default password and user for the web is <strong>admin</strong>.
 
@@ -205,7 +207,7 @@ For common issues and problems visit: http://sourceforge.net/p/phpvirtualbox/wik
 
 Install <strong>cuckoo as daemon</strong>:
 
-* <strong>apt-get install supervisor</strong>
+* <strong>sudo apt-get install supervisor</strong>
 * Edit <strong>/etc/supervisor/conf.d/cuckoo.conf</strong> example:
 
         [program:cuckoo]
@@ -220,7 +222,7 @@ Install <strong>cuckoo as daemon</strong>:
         directory=/home/cuckoo/utils
         user=cuckoo
 
-* Reload supervisor: supervisorctl reload
+* Reload supervisor: sudo supervisorctl reload
 
 Import OVF (.OVA) Virtual Machines
 =================
