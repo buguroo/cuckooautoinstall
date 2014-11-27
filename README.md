@@ -20,10 +20,12 @@ Usage
 * Execute cuckoo (check the image output): <strong>cd cuckoo && python cuckoo.py</strong>
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20cuckoo%20working.png)
-* Execute also webpy: <strong>cd cuckoo/utils && python web.py</strong>
+
+* Execute also webpy (default port 8080): <strong>cd cuckoo/utils && python web.py</strong>
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20webpy.png)
-* Execute also django: <strong>cd cuckoo/web && python manage.py runserver 0.0.0.0:6969</strong>
+
+* Execute also django using port 6969: <strong>cd cuckoo/web && python manage.py runserver 0.0.0.0:6969</strong>
 
 ![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20django.png)
 
