@@ -78,7 +78,7 @@ Download the VirtualBox Extension Pack for your Distribution and for your Virtua
 
 Install the Extension Pack with: <strong>VBoxManage extpack install</strong>. For example for my 4.1.18_Debianr78361: 
 
-    VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
+    sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
                 
 Create the file /etc/default/virtualbox and add the user. I am using the user 'cuckoo' created by the script, this user must be in vboxusers: 
 
