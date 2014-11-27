@@ -221,11 +221,20 @@ Install <strong>cuckoo as daemon</strong>:
 
 Import OVF (.OVA) Virtual Machines
 =================
-You can use the VBoxManage import command to import a virtual machine. For example to import my Virtual Machine "Windows_7.ova" created from VirtualBox in Windows:
+You can use the <strong>VBoxManage import</strong> command to import a virtual machine. Use the user created for cuckoo. For example to import my Virtual Machine "windows_7.ova" created from VirtualBox in Windows:
 
-    VBoxManage import Windows_7.ova
+    su cuckoo
+    VBoxManage import windows_7.ova
     
-<strong>Note: if you are running the old command /usr/lib/virtualbox/vboxwebsrv -H 127.0.0.1 --background, use the same user of the config.php of the phpVirtualbox.</strong>
+If you are using phpVirtualbox with a old VirtualBox version and you are running the command /usr/lib/virtualbox/vboxwebsrv -H 127.0.0.1 --background execute the command from the same user of the config.php of phpVirtualbox. Example: 
+
+    su cuckoo
+    /usr/lib/virtualbox/vboxwebsrv -H 127.0.0.1 --background
+
+Configure HostOnly adapter to the virtual machine, you can list your virtual machines with the <strong>VBoxManage list vms</strong> command. Use the user created for cuckoo. For my Windows_7 virtual machine:
+
+    su cuckoo
+    vboxmanage modifyvm “windows_7" --hostonlyadapter1 vboxnet0
 
 TO-DO
 =================
