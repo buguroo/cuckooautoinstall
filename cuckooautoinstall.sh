@@ -38,8 +38,8 @@ CODENAME=${CODENAME%%\)*}
 
 echo $OS $VER $ARCH $CODENAME
 
-if sudo 2>/dev/null; then
-    echo install sudo from the root account ( Debian: apt-get install sudo )
+if ! hash sudo 2>/dev/null; then
+    echo install sudo from the root account
     exit
 fi
     
