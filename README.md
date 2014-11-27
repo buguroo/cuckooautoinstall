@@ -183,7 +183,7 @@ Edit config.php and add the cuckoo user:
     var $username = 'cuckoo';
     var $password = '12345';
 
-Start  vboxweb service, in my Virtualbox version (is old) you can use this command:
+Start vboxweb service using the <strong>same user of the config.php</strong> of the phpVirtualbox. In my (old) Virtualbox version you can use this command:
 
      vboxwebsrv -H 127.0.0.1 --background
 
@@ -224,6 +224,8 @@ Import OVF (.OVA) Virtual Machines
 You can use the VBoxManage import command to import a virtual machine. For example to import my Virtual Machine "Windows_7.ova" created from VirtualBox in Windows:
 
     VBoxManage import Windows_7.ova
+    
+<strong>Note: if you are running the old command /usr/lib/virtualbox/vboxwebsrv -H 127.0.0.1 --background, use the same user of the config.php of the phpVirtualbox.</strong>
 
 TO-DO
 =================
