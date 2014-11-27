@@ -294,8 +294,9 @@ Restart cuckoo.
 
 TO-DO
 =================
-* Add vmcloak info to Readme: http://vmcloak.org/ Automated Virtual Machine Generation and Cloaking tailored for Cuckoo Sandbox.
-* Add Pafish info to Readme: https://github.com/a0rtega/pafish The objective of this project is to collect usual tricks seen in malware samples. This allows us to study it, and test if our analysis environments are properly implemented.
+* Add vmcloak info to README: http://vmcloak.org/ Automated Virtual Machine Generation and Cloaking tailored for Cuckoo Sandbox.
+* Add Pafish info to README: https://github.com/a0rtega/pafish The objective of this project is to collect usual tricks seen in malware samples. This allows us to study it, and test if our analysis environments are properly implemented.
+* Add hardening cuckoo info to README.
 * Add support for more Linux Distributions.
 * Improve the script (sorry for my bad Bash skills).
 * Add arguments to the script in order to enable and disable things like: do not install django, do not enable mongodb, install phpvirtualbox, select virtualbox, vmware or kvm installation, apply or do not apply a workarround patch (ex: django patch) etc.
