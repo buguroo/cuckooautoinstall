@@ -278,6 +278,7 @@ Making the screenshot using the user created for cuckoo. For my windows_7 virtua
 
 Add the new virtual machine with the new snapshoot and with the static IP address to the <strong>conf/virtualbox.conf:</strong>:
 
+    mode = headless
     machines = cuckoo1
     [cuckoo1]
     label = windows_7
