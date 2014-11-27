@@ -37,15 +37,16 @@ CODENAME=${CODENAME##*\(}
 CODENAME=${CODENAME%%\)*}
 
 echo $OS $VER $ARCH $CODENAME
-
-if ! hash sudo 2>/dev/null; then
-    echo install sudo from the root account
-    exit
-fi
     
 if [ "debian" = $OS ];
 then
     echo Debian...
+    
+    if ! hash sudo 2>/dev/null; then
+        echo install sudo from the root account: apt-get install sudo
+        exit
+    fi
+
     sudo apt-get -y install python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet
     sudo pip install django
     sudo pip install pymongo -U
