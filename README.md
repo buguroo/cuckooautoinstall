@@ -194,7 +194,7 @@ And for new versions:
 
 Access to the phpvirtualbox web, the default password and user for the web is <strong>admin</strong>.
 
-For common issues and problems visit: http://sourceforge.net/p/phpvirtualbox/wiki/Common phpVirtualBox Errors and Issues/
+For common issues and problems visit: http://sourceforge.net/p/phpvirtualbox/wiki/Common%20phpVirtualBox%20Errors%20and%20Issues/
 
 * Install a RDP Client to access to virtual machines (you can use the <strong>Windows Remote Desktop client</strong>).
 
