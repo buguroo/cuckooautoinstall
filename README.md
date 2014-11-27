@@ -166,9 +166,9 @@ phpVirtualBox versioning is aligned with VirtualBox versioning in that the major
     for VirtualBox 4.0 - phpvirtualbox-4.0-x.zip *) 
     ...
 
-I am using Virtualbox 4.1.18_Debianr78361 and I found a version for this in: [http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/](http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/) phpvirtualbox-4.1-11.zip
+I am using Virtualbox 4.1.18_Debianr78361 and I found a version for my version: phpvirtualbox-4.1-11.zip [http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/](http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/) 
 
-Download and extract the CORRECT phpvirtualbox version in the nginx public web path:
+Download and extract the CORRECT phpvirtualbox version for your Virtualbox version in the nginx public web path:
 
     cd /usr/share/nginx/www
     wget -L -c http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/phpvirtualbox-4.1-11.zip/download -O phpvirtualbox.zip 
