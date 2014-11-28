@@ -203,7 +203,7 @@ For common issues and problems visit: http://sourceforge.net/p/phpvirtualbox/wik
 
 * Install a RDP Client to access to virtual machines (you can use the <strong>Windows Remote Desktop client</strong>).
 
-![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/master/github%20access.png)
+![ScreenShot](https://github.com/buguroo/cuckooautoinstall/blob/images/github%20access.png)
 
 Install <strong>cuckoo as daemon</strong>:
 
