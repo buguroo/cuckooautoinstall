@@ -55,6 +55,7 @@ then
     sudo apt-get -y install autoconf automake libtool
 
     #jansson
+    sudo apt-get install dh-autoreconf
     git clone https://github.com/akheron/jansson
     cd jansson
     autoreconf -vi
