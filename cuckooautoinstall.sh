@@ -97,6 +97,7 @@ then
     #ssdeep end
 
     #pydeep
+    sudo apt-get install unzip
     wget -c https://github.com/kbandla/pydeep/archive/master.zip
     unzip -o master.zip
     cd pydeep-master
