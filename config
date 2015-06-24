@@ -1,0 +1,6 @@
+#!/bin/bash
+declare -a DEFAULTS
+# For example, specifying a custom release (needed for installing in debian testing,
+# as virtualbox does not have debian testing repos...)
+
+# DEFAULTS['RELEASE']='wheezy'

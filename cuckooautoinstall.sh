@@ -10,11 +10,17 @@ cat <<EO
 EO
 
 source /etc/os-release
-source build_functions.bash
+source config
+
+get_default(){
+    what=$1; default=$2
+    [[ ${DEFAULTS[${what}]} ]] && echo ${DEFAULTS[${what}]} || echo $default
+}
 
 SUDO="sudo"
 TMPDIR=$(mktemp -d)
-RELEASE=$(lsb_release -cs)
+RELEASE=$(get_default 'RELEASE' $(lsb_release -cs))
+CUSTOM_PKGS=$(get_default 'CUSTOM_PKGS' ' ')
 ORIG_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
 VIRTUALBOX_REP="deb http://download.virtualbox.org/virtualbox/debian $RELEASE contrib"
 
@@ -28,7 +34,7 @@ packages["ubuntu"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt
         exit
     }
 } || {
-    $SUDO=""
+    SUDO=""
 }
 
 [[ ! -e /etc/debian_version ]] && {
@@ -110,6 +116,7 @@ echo ${VIRTUALBOX_REP} |$SUDO tee /etc/apt/sources.list.d/virtualbox.list
 wget -O - https://www.virtualbox.org/download/oracle_vbox.asc | $SUDO apt-key add -
 $SUDO apt-get update
 $SUDO apt-get install -y  ${packages["${RELEASE}"]}
+$SUDO apt-get install -y $CUSTOM_PKGS
 $SUDO apt-get -y install 
 $SUDO pip install -r ${ORIG_DIR}/requirements.txt
 
