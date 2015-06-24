@@ -206,13 +206,13 @@ then
     #yara end
 
     #pydeep
-    sudo apt-get install ssdeep python-pyrex subversion libfuzzy-dev -y
-    svn checkout http://pyssdeep.googlecode.com/svn/trunk/ pyssdeep
-    cd pyssdeep
-    sudo python setup.py build
+    sudo apt-get install unzip
+    wget -c https://github.com/kbandla/pydeep/archive/master.zip
+    unzip -o master.zip
+    cd pydeep-master
+    python setup.py build
     sudo python setup.py install
     cd ..
-    sudo pip install pydeep
     #pydeep end
     
     #volatility
