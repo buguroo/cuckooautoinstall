@@ -111,17 +111,19 @@ build_yara(){
     cd ${TMPDIR}
 }
 
-
+pip(){
+    $SUDO pip install -r ${ORIG_DIR}/requirements.txt
+}
 
 cd ${TMPDIR}
 echo ${VIRTUALBOX_REP} |$SUDO tee /etc/apt/sources.list.d/virtualbox.list
 wget -O - https://www.virtualbox.org/download/oracle_vbox.asc | $SUDO apt-key add -
 $SUDO apt-get update
 $SUDO apt-get install -y  ${packages["${RELEASE}"]}
-$SUDO pip install -r ${ORIG_DIR}/requirements.txt
 $SUDO apt-get -y install 
 
 
+pip
 create_cuckoo_user
 clone_repos
 clone_cuckoo
