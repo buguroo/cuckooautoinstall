@@ -41,6 +41,11 @@ clone_repos(){
     git clone https://github.com/plusvic/yara
 }
 
+create_cuckoo_user(){
+    $SUDO adduser  --disabled-password -gecos "" cuckoo
+    $SUDO usermod -G vboxusers cuckoo
+}
+
 clone_cuckoo(){
     cd /home/cuckoo/
     $SUDO git clone https://github.com/cuckoobox/cuckoo
@@ -56,11 +61,6 @@ create_hostonly_iface(){
     $SUDO sysctl -w net.ipv4.ip_forward=1
 }
 
-create_cuckoo_user(){
-    $SUDO adduser  --disabled-password -gecos "" cuckoo
-    $SUDO usermod -G vboxusers cuckoo
-}
-
 setcap(){
     $SUDO setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
 }
@@ -68,14 +68,14 @@ setcap(){
 fix_django_version(){
     cd /home/cuckoo/
     python -c "import django; from distutils.version import LooseVersion; import sys; sys.exit(LooseVersion(django.get_version()) <= LooseVersion('1.5'))" && { 
-        egrep -i "templates = \(.*\)" cuckoo/web/web/settings.py || sed -i '/TEMPLATE_DIRS/{ N; s/.*/TEMPLATE_DIRS = \( \("templates"\),/; }' cuckoo/web/web/settings.py
+        egrep -i "templates = \(.*\)" cuckoo/web/web/settings.py || $SUDO sed -i '/TEMPLATE_DIRS/{ N; s/.*/TEMPLATE_DIRS = \( \("templates"\),/; }' cuckoo/web/web/settings.py
     }
     cd $TMPDIR
 }
 
 enable_mongodb(){
     cd /home/cuckoo/
-    sed -i '/\[mongodb\]/{ N; s/.*/\[mongodb\]\nenabled = yes/; }' cuckoo/conf/reporting.conf
+    $SUDO sed -i '/\[mongodb\]/{ N; s/.*/\[mongodb\]\nenabled = yes/; }' cuckoo/conf/reporting.conf
     cd $TMPDIR
 }
 
@@ -113,12 +113,12 @@ $SUDO apt-get install -y  ${packages["${RELEASE}"]}
 $SUDO apt-get -y install 
 $SUDO pip install -r ${ORIG_DIR}/requirements.txt
 
+create_cuckoo_user
 clone_repos
 clone_cuckoo
 build_jansson
 build_yara
 create_hostonly_iface
-create_cuckoo_user
 setcap
 fix_django_version
 enable_mongodb
