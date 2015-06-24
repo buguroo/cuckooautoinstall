@@ -8,7 +8,11 @@ In three words, Cuckoo Sandbox is a malware analysis system.
 
 What does that mean? It simply means that you can throw any suspicious file at it and in a matter of seconds Cuckoo will provide you back some detailed results outlining what such file did when executed inside an isolated environment.
 
-I created this script in [Buguroo Offensive Security](https://buguroo.com/) to avoid wasting my time installing Cuckoo Sandbox in <strong>Debian Stable</strong>. 
+We created this script in [Buguroo Offensive Security](https://buguroo.com/) to avoid wasting our time installing Cuckoo Sandbox in <strong>Debian Stable and others</strong>. 
+
+Authors:
+* [David Reguera García - Dreg <dreguera@buguroo.com>](https://github.com/David-Reguera-Garcia-Dreg)
+* [David Francos Cuartero - XayOn <dfrancos@buguroo.com>](https://github.com/XayOn)
 
 Usage
 =================
