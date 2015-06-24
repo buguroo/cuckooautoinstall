@@ -133,7 +133,7 @@ then
     #tcpdump end
 
     #cuckoo
-    git clone git://github.com/cuckoobox/cuckoo.git
+    git clone https://github.com/cuckoobox/cuckoo.git
     #cuckoo end
 
     #django fix
@@ -157,7 +157,7 @@ then
     #enable mongodb end
 fi
 
-if [ "Ubuntu" = $OS ];
+if [ "ubuntu" = $OS ];
 then
 
     echo Ubuntu
@@ -206,13 +206,13 @@ then
     #yara end
 
     #pydeep
-    apt-get install ssdeep python-pyrex subversion libfuzzy-dev -y
-    svn checkout http://pyssdeep.googlecode.com/svn/trunk/ pyssdeep
-    cd pyssdeep
-    sudo python setup.py build
+    sudo apt-get install unzip
+    wget -c https://github.com/kbandla/pydeep/archive/master.zip
+    unzip -o master.zip
+    cd pydeep-master
+    python setup.py build
     sudo python setup.py install
     cd ..
-    sudo pip install pydeep
     #pydeep end
     
     #volatility
@@ -252,7 +252,7 @@ then
     #tcpdump end
 
     #cuckoo
-    git clone git://github.com/cuckoobox/cuckoo.git
+    git clone https://github.com/cuckoobox/cuckoo.git
     #cuckoo end
 
     #django fix
