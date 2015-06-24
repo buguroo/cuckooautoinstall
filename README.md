@@ -10,7 +10,7 @@ What does that mean? It simply means that you can throw any suspicious file at i
 
 We created this script in [Buguroo Offensive Security](https://buguroo.com/) to avoid wasting our time installing Cuckoo Sandbox in <strong>Debian Stable and others</strong>. 
 
-Authors:
+##Authors:
 * [David Reguera García - Dreg <dreguera@buguroo.com>](https://github.com/David-Reguera-Garcia-Dreg)
 * [David Francos Cuartero - XayOn <dfrancos@buguroo.com>](https://github.com/XayOn)
 
