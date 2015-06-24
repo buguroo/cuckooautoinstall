@@ -118,8 +118,9 @@ echo ${VIRTUALBOX_REP} |$SUDO tee /etc/apt/sources.list.d/virtualbox.list
 wget -O - https://www.virtualbox.org/download/oracle_vbox.asc | $SUDO apt-key add -
 $SUDO apt-get update
 $SUDO apt-get install -y  ${packages["${RELEASE}"]}
-$SUDO apt-get -y install 
 $SUDO pip install -r ${ORIG_DIR}/requirements.txt
+$SUDO apt-get -y install 
+
 
 create_cuckoo_user
 clone_repos
