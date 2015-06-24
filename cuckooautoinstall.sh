@@ -157,7 +157,7 @@ then
     #enable mongodb end
 fi
 
-if [ "Ubuntu" = $OS ];
+if [ "ubuntu" = $OS ];
 then
 
     echo Ubuntu
