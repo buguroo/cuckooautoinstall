@@ -41,6 +41,14 @@ clone_repos(){
     git clone https://github.com/plusvic/yara
 }
 
+install_volatility(){
+    wget http://downloads.volatilityfoundation.org/releases/2.4/volatility-2.4.tar.gz
+    tar xvf volatility-2.4.tar.gz
+    cd volatility-2.4/
+    python setup.py build
+    python setup.py install
+}
+
 create_cuckoo_user(){
     $SUDO adduser  --disabled-password -gecos "" cuckoo
     $SUDO usermod -G vboxusers cuckoo
@@ -118,6 +126,7 @@ clone_repos
 clone_cuckoo
 build_jansson
 build_yara
+install_volatility
 create_hostonly_iface
 setcap
 fix_django_version
