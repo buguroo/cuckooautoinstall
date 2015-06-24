@@ -206,7 +206,7 @@ then
     #yara end
 
     #pydeep
-    apt-get install ssdeep python-pyrex subversion libfuzzy-dev -y
+    sudo apt-get install ssdeep python-pyrex subversion libfuzzy-dev -y
     svn checkout http://pyssdeep.googlecode.com/svn/trunk/ pyssdeep
     cd pyssdeep
     sudo python setup.py build
