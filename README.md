@@ -16,7 +16,7 @@ We created this script in [Buguroo Offensive Security](https://buguroo.com/) to 
 
 Usage
 =================
-* Execute the script: <strong>sh cuckooautoinstall.sh</strong>
+* Execute the script: <strong>bash cuckooautoinstall.sh</strong>
 * Add a password for the user <strong>'cuckoo'</strong> created by the script. Use: <strong>passwd cuckoo</strong> command.
 * Create the virtual machines [http://docs.cuckoosandbox.org/en/latest/installation/guest/](http://docs.cuckoosandbox.org/en/latest/installation/guest/) or import virtual machines using <strong>VBoxManage import virtual_machine.ova</strong>
 * Add to the virtual machines with HostOnly option using vboxnet0: <strong>vboxmanage modifyvm “virtual_machine" --hostonlyadapter1 vboxnet0</strong> (use this command to list the VMs: <strong>VBoxManage list vms</strong>)
