@@ -112,7 +112,7 @@ build_yara(){
 }
 
 pip(){
-    $SUDO pip install -r ${ORIG_DIR}/requirements.txt
+    $SUDO pip install -r ${ORIG_DIR}/requirements.txt --upgrade
 }
 
 cd ${TMPDIR}
