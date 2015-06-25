@@ -41,6 +41,14 @@ clone_repos(){
     git clone https://github.com/plusvic/yara
 }
 
+install_volatility(){
+    wget http://downloads.volatilityfoundation.org/releases/2.4/volatility-2.4.tar.gz
+    tar xvf volatility-2.4.tar.gz
+    cd volatility-2.4/
+    $SUDO python setup.py build
+    $SUDO python setup.py install
+}
+
 create_cuckoo_user(){
     $SUDO adduser  --disabled-password -gecos "" cuckoo
     $SUDO usermod -G vboxusers cuckoo
@@ -103,7 +111,17 @@ build_yara(){
     cd ${TMPDIR}
 }
 
-
+pip(){
+    $SUDO pip install pymongo --upgrade
+    $SUDO pip install django --upgrade
+    $SUDO pip install pydeep --upgrade
+    $SUDO pip install maec --upgrade
+    $SUDO pip install py3compat --upgrade
+    $SUDO pip install lxml --upgrade
+    $SUDO pip install cybox --upgrade
+    $SUDO pip install distorm3 --upgrade
+    $SUDO pip install pycrypto --upgrade
+}
 
 cd ${TMPDIR}
 echo ${VIRTUALBOX_REP} |$SUDO tee /etc/apt/sources.list.d/virtualbox.list
@@ -111,13 +129,15 @@ wget -O - https://www.virtualbox.org/download/oracle_vbox.asc | $SUDO apt-key ad
 $SUDO apt-get update
 $SUDO apt-get install -y  ${packages["${RELEASE}"]}
 $SUDO apt-get -y install 
-$SUDO pip install -r ${ORIG_DIR}/requirements.txt
 
+
+pip
 create_cuckoo_user
 clone_repos
 clone_cuckoo
 build_jansson
 build_yara
+install_volatility
 create_hostonly_iface
 setcap
 fix_django_version
