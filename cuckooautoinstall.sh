@@ -51,12 +51,12 @@ echo "Logging enabled on ${LOG}"
 }
 
 [[ ! -e /etc/debian_version ]] && {
-    echo "This script currently works only on debian-based (debian, ubuntu...) distros"
+    echo  "This script currently works only on debian-based (debian, ubuntu...) distros"
     exit 1
 }
 
 run_and_log(){
-    echo $2;
+    echo -e "${log_icon} ${2}"
     $1 &> ${LOG}
 }
 
