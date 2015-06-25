@@ -6,4 +6,4 @@ py3compat
 lxml
 cybox
 distorm3
-pycypto
+pycrypto
