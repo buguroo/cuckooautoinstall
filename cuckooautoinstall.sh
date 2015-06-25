@@ -112,7 +112,15 @@ build_yara(){
 }
 
 pip(){
-    $SUDO pip install -r ${ORIG_DIR}/requirements.txt --upgrade
+    $SUDO pip install pymongo --upgrade
+    $SUDO pip install django --upgrade
+    $SUDO pip install pydeep --upgrade
+    $SUDO pip install maec --upgrade
+    $SUDO pip install py3compat --upgrade
+    $SUDO pip install lxml --upgrade
+    $SUDO pip install cybox --upgrade
+    $SUDO pip install distorm3 --upgrade
+    $SUDO pip install pycrypto --upgrade
 }
 
 cd ${TMPDIR}
