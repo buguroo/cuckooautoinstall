@@ -56,19 +56,20 @@ Quickstart guide
 * Execute cuckoo (check the image output)::
   cd cuckoo
   python cuckoo.py
-.. image:: https://github.com/buguroo/cuckooautoinstall/blob/images/github%20cuckoo%20working.png
+
+.. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20cuckoo%20working.png
 
 * Execute also webpy (default port 8080)::
   cd cuckoo/utils
   python web.py
 
-.. image:: https://github.com/buguroo/cuckooautoinstall/blob/images/github%20webpy.png
+.. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20webpy.png
 
 * Execute also django using port 6969::
   cd cuckoo/web
   python manage.py runserver 0.0.0.0:6969
 
-.. image:: https://github.com/buguroo/cuckooautoinstall/blob/images/github%20django.png
+.. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20django.png
 
 Script features
 =================
@@ -116,78 +117,28 @@ Install the Extension Pack with: *VBoxManage extpack install*. For example for m
 Create the file /etc/default/virtualbox and add the user. I am using the user 'cuckoo' created by the script, this user must be in vboxusers::
     VBOXWEB_USER=cuckoo
 
-* Download and install *phpVirtualbox*: An open source, AJAX implementation of the VirtualBox user interface written in PHP. 
-  As a modern web interface, it allows you to access and control remote VirtualBox instances. 
-  phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment 
-  - mirroring the VirtualBox GUI through its web interface. 
-  http://sourceforge.net/projects/phpvirtualbox/ ::
+Download and install *phpVirtualbox*: An open source, AJAX implementation of the VirtualBox user interface written in PHP. 
+As a modern web interface, it allows you to access and control remote VirtualBox instances. 
+phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment 
+mirroring the VirtualBox GUI through its web interface. 
+
+http://sourceforge.net/projects/phpvirtualbox/
+
+Install packages::
     sudo apt-get install nginx php5-common php5-mysql php5-fpm php-pear unzip
+
+Start ngnix::
     sudo /etc/init.d/nginx start
 
-Edit /etc/nginx/sites-available/default::
-                server {
-                        listen   80; ## listen for ipv4; this line is default and implied
-                        listen   [::]:80 default ipv6only=on; ## listen for ipv6
-                
-                        root /usr/share/nginx/www;
-                        index index.php index.html index.htm;
-                
-                        # Make site accessible from http://localhost/
-                        server_name _;
-                
-                        location / {
-                                # First attempt to serve request as file, then
-                                # as directory, then fall back to index.html
-                                try_files $uri $uri/ /index.html;
-                                # Uncomment to enable naxsi on this location
-                                # include /etc/nginx/naxsi.rules
-                        }
-                
-                        location /doc/ {
-                                alias /usr/share/doc/;
-                                autoindex on;
-                                allow 127.0.0.1;
-                                deny all;
-                        }
-                
-                        # Only for nginx-naxsi : process denied requests
-                        #location /RequestDenied {
-                                # For example, return an error code
-                                #return 418;
-                        #}
-                
-                        #error_page 404 /404.html;
-                
-                        # redirect server error pages to the static page /50x.html
-                        #
-                        error_page 500 502 503 504 /50x.html;
-                        location = /50x.html {
-                                root /usr/share/nginx/www;
-                        }
-                
-                        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-                        #
-                        location ~ \.php$ {
-                                try_files $uri =404;
-                                fastcgi_split_path_info ^(.+\.php)(/.+)$;
-                                fastcgi_pass unix:/var/run/php5-fpm.sock;
-                                fastcgi_index index.php;
-                                include fastcgi_params;
-                        }
-                
-                        # deny access to .htaccess files, if Apache's document root
-                        # concurs with nginx's one
-                        #
-                        location ~ /\.ht {
-                                deny all;
-                        }
-                }
-                
-Reload nginx config::
+Enable php in ngnix config.
+
+Reload nginx::
     sudo /etc/init.d/nginx reload
 
 Install the last phpVirtualBox and extract it in the nginx web.
-phpVirtualBox versioning is aligned with VirtualBox versioning in that the major and minor release numbers will maintain compatibility::
+phpVirtualBox versioning is aligned with VirtualBox versioning in that the major 
+and minor release numbers will maintain compatibility::
+
     phpVirtualBox 4.0-x will always be compatible with VirtualBox 4.0.x. 
     Regardless of what the latest x revision is.     
     phpVirtualBox 4.2-x will always be compatible with VirtualBox 4.2.x, etc.. 
@@ -195,25 +146,28 @@ phpVirtualBox versioning is aligned with VirtualBox versioning in that the major
     for VirtualBox 4.2 - phpvirtualbox-4.2-x.zip 
     for VirtualBox 4.1 - phpvirtualbox-4.1-x.zip 
     for VirtualBox 4.0 - phpvirtualbox-4.0-x.zip 
-    ...
 
 I am using Virtualbox 4.1.18_Debianr78361 and I found a version for my version: phpvirtualbox-4.1-11.zip http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/
 
 Download and extract the CORRECT phpvirtualbox version for your Virtualbox version in the nginx public web path::
+
     cd /usr/share/nginx/www
     sudo wget -L -c http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/phpvirtualbox-4.1-11.zip/download -O phpvirtualbox.zip 
     sudo unzip phpvirtualbox.zip
 
 Copy the config sample like default config::
+
     cd phpvirtualbox-4.1-11
     sudo cp config.php-example config.php
 
 Edit config.php and add the cuckoo user::
+
     var $username = 'cuckoo';
     var $password = '12345';
 
 Start vboxweb service using the *same user of the config.php* of the 
 phpVirtualbox. In my (old) Virtualbox version you can use this command::
+
     su cuckoo
     vboxwebsrv -H 127.0.0.1 --background
 
@@ -227,7 +181,7 @@ For common issues and problems visit: http://sourceforge.net/p/phpvirtualbox/wik
 
 * Install a RDP Client to access to virtual machines (you can use the *Windows Remote Desktop client*).
 
-.. image:: https://github.com/buguroo/cuckooautoinstall/blob/images/github%20access.png
+.. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20access.png
 
 Install cuckoo as daemon
 ==========================
@@ -255,7 +209,7 @@ Reload supervisor::
   sudo supervisorctl reload
 
 Import OVF (.OVA) Virtual Machines
-=================
+==================================
 Read first: http://docs.cuckoosandbox.org/en/latest/installation/guest/
 
 Normally I create the Virtual Machine from my Windows and after I export the 
@@ -318,4 +272,6 @@ TODO
 * Add documentation on new configuration system
 
 Pull requests are always welcome
-++++++++++++++++++++++++++++++++
+--------------------------------
+
+=)
