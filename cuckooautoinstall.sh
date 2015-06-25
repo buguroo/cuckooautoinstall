@@ -23,13 +23,15 @@ RELEASE=$(get_default 'RELEASE' $(lsb_release -cs))
 CUSTOM_PKGS=$(get_default 'CUSTOM_PKGS' ' ')
 ORIG_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
 VIRTUALBOX_REP="deb http://download.virtualbox.org/virtualbox/debian $RELEASE contrib"
+CUCKOO_REPO=$(get_default 'cuckoo_repo' 'https://github.com/cuckoobox/cuckoo')
 
 declare -a packages
 declare -a python_packages 
 
 packages["debian"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
 packages["ubuntu"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
-python_packages=(pymongo django pydeep maec py3compat lxml cybox distorm3 pycrypto)
+python_packages=($(get_default 'python_pkgs' 'pymongo django pydeep maec py3compat lxml cybox distorm3 pycrypto'))
+log_icon="\e[31m✓\e[0m"
 
 [[ $1 == "--verbose" ]] && {
     LOG=/dev/stdout
@@ -78,7 +80,7 @@ create_cuckoo_user(){
 
 clone_cuckoo(){
     cd /home/cuckoo/
-    $SUDO git clone https://github.com/cuckoobox/cuckoo
+    $SUDO git clone $CUCKOO_REPO
     $SUDO chown -R cuckoo:cuckoo cuckoo
     cd $TMPDIR
 }
