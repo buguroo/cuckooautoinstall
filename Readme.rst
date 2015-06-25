@@ -51,6 +51,7 @@ Quickstart guide
 
 * Add to the virtual machines with HostOnly option using vboxnet0::
   vboxmanage modifyvm “virtual_machine" --hostonlyadapter1 vboxnet0
+
 * Configure cuckoo (`http://docs.cuckoosandbox.org/en/latest/installation/host/configuration/` )
 
 * Execute cuckoo (check the image output)::
@@ -78,21 +79,28 @@ Script features
 * Installs the last versions of ssdeep, yara, pydeep-master & jansson.
 * Solves common problems during the installation: ldconfigs, autoreconfs...
 * Installs by default virtualbox and *creates the hostonlyif*.
-* Creates the *iptables rules* and the ip forward to enable internet in the cuckoo virtual machines::
+* Creates the *'cuckoo'* user in the system and it is also added this user to *vboxusers* group.
+* Enables *mongodb* in *conf/reporting.conf* 
+* Creates the *iptables rules* and the ip forward to enable internet in the cuckoo virtual machines
+
+::
+
     sudo iptables -A FORWARD -o eth0 -i vboxnet0 -s 192.168.56.0/24 -m conntrack --ctstate NEW -j ACCEPT
     sudo iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
     sudo iptables -A POSTROUTING -t nat -j MASQUERADE
     sudo sysctl -w net.ipv4.ip_forward=1
 
-* Enables run *tcpdump* from nonroot user::
+Enables run *tcpdump* from nonroot user
+
+::
+
     sudo apt-get -y install libcap2-bin
     sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
 
-*Creates the *'cuckoo'* user in the system and it is also added this user to *vboxusers* group.
+Fixes the *"TEMPLATE_DIRS setting must be a tuple"* error when running python manage.py from the *DJANGO version >= 1.6*. Replacing in *web/web/settings.py*
 
-* Enables *mongodb* in *conf/reporting.conf* 
+::
 
-* Fixes the *"TEMPLATE_DIRS setting must be a tuple"* error when running python manage.py from the *DJANGO version >= 1.6*. Replacing in *web/web/settings.py*::
         TEMPLATE_DIRS = (
         "templates"
         )
@@ -105,39 +113,60 @@ Remote access to Virtual Machines via RDP + Remote control of VirtualBox (Option
 
 Download and install Oracle VM VirtualBox Extension Pack from `https://www.virtualbox.org/wiki/Downloads`
 
-Download the VirtualBox Extension Pack for your Distribution and for your Virtualbox version: *vboxmanage --version*. For example::
+Download the VirtualBox Extension Pack for your Distribution and for your Virtualbox version: *vboxmanage --version*. For example
+
+::
+
     ~# vboxmanage --version
     4.1.18_Debianr78361
     #(found this version in Extension Pack Link for All Platforms, in VirtualBox 4.1.18:  https://www.virtualbox.org/wiki/Download_Old_Builds_4_1)
     wget http://download.virtualbox.org/virtualbox/4.1.18/Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
 
-Install the Extension Pack with: *VBoxManage extpack install*. For example for my 4.1.18_Debianr78361::
+Install the Extension Pack with: *VBoxManage extpack install*. For example for my 4.1.18_Debianr78361
+
+::
+
     sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
 
-Create the file /etc/default/virtualbox and add the user. I am using the user 'cuckoo' created by the script, this user must be in vboxusers::
+Create the file /etc/default/virtualbox and add the user. I am using the user 'cuckoo' created by the script, this user must be in vboxusers
+
+::
+
     VBOXWEB_USER=cuckoo
 
-Download and install *phpVirtualbox*: An open source, AJAX implementation of the VirtualBox user interface written in PHP. 
+Download and install *phpVirtualbox*: An open source, AJAX implementation of
+the VirtualBox user interface written in PHP. 
 As a modern web interface, it allows you to access and control remote VirtualBox instances. 
 phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment 
 mirroring the VirtualBox GUI through its web interface. 
 
 http://sourceforge.net/projects/phpvirtualbox/
 
-Install packages::
+Install packages
+
+::
+
     sudo apt-get install nginx php5-common php5-mysql php5-fpm php-pear unzip
 
-Start ngnix::
+Start ngnix
+
+::
+
     sudo /etc/init.d/nginx start
 
 Enable php in ngnix config.
 
-Reload nginx::
+Reload nginx
+
+::
+
     sudo /etc/init.d/nginx reload
 
 Install the last phpVirtualBox and extract it in the nginx web.
 phpVirtualBox versioning is aligned with VirtualBox versioning in that the major 
-and minor release numbers will maintain compatibility::
+and minor release numbers will maintain compatibility
+
+::
 
     phpVirtualBox 4.0-x will always be compatible with VirtualBox 4.0.x. 
     Regardless of what the latest x revision is.     
@@ -149,29 +178,39 @@ and minor release numbers will maintain compatibility::
 
 I am using Virtualbox 4.1.18_Debianr78361 and I found a version for my version: phpvirtualbox-4.1-11.zip http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/
 
-Download and extract the CORRECT phpvirtualbox version for your Virtualbox version in the nginx public web path::
+Download and extract the CORRECT phpvirtualbox version for your Virtualbox version in the nginx public web path
+
+::
 
     cd /usr/share/nginx/www
     sudo wget -L -c http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/phpvirtualbox-4.1-11.zip/download -O phpvirtualbox.zip 
     sudo unzip phpvirtualbox.zip
 
-Copy the config sample like default config::
+Copy the config sample like default config
+
+::
 
     cd phpvirtualbox-4.1-11
     sudo cp config.php-example config.php
 
-Edit config.php and add the cuckoo user::
+Edit config.php and add the cuckoo user
+
+::
 
     var $username = 'cuckoo';
     var $password = '12345';
 
 Start vboxweb service using the *same user of the config.php* of the 
-phpVirtualbox. In my (old) Virtualbox version you can use this command::
+phpVirtualbox. In my (old) Virtualbox version you can use this command
+
+::
 
     su cuckoo
     vboxwebsrv -H 127.0.0.1 --background
 
-And for new versions::
+And for new versions
+
+::
     sudo VBoxManage setproperty websrvauthlibrary default
     sudo /etc/init.d/vboxweb-service restart
 
@@ -179,7 +218,7 @@ Access to the phpvirtualbox web, the default password and user for the web is *a
 
 For common issues and problems visit: http://sourceforge.net/p/phpvirtualbox/wiki/Common%20phpVirtualBox%20Errors%20and%20Issues/
 
-* Install a RDP Client to access to virtual machines (you can use the *Windows Remote Desktop client*).
+Install a RDP Client to access to virtual machines (you can use the *Windows Remote Desktop client*).
 
 .. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20access.png
 
@@ -188,10 +227,16 @@ Install cuckoo as daemon
 
 For this, we recommend supervisor usage.
 
-Install supervisor::
+Install supervisor
+
+::
+
     sudo apt-get install supervisor
 
-Edit */etc/supervisor/conf.d/cuckoo.conf* , like::
+Edit */etc/supervisor/conf.d/cuckoo.conf* , like
+
+::
+
         [program:cuckoo]
         command=python cuckoo.py
         directory=/home/cuckoo
@@ -205,7 +250,9 @@ Edit */etc/supervisor/conf.d/cuckoo.conf* , like::
         directory=/home/cuckoo/utils
         user=cuckoo
 
-Reload supervisor::
+Reload supervisor
+
+::
   sudo supervisorctl reload
 
 Import OVF (.OVA) Virtual Machines
@@ -219,7 +266,10 @@ to my server using sftp.
 
 You can use the *VBoxManage import* command to import a virtual machine. 
 Use the user created for cuckoo. Here an example to import my 
-Virtual Machine "windows_7.ova" created from VirtualBox in Windows::
+Virtual Machine "windows_7.ova" created from VirtualBox in Windows
+
+::
+
     su cuckoo
     VBoxManage import windows_7.ova
 
@@ -227,23 +277,34 @@ If you are using phpVirtualbox with a old VirtualBox
 version and you are running the command 
 /usr/lib/virtualbox/vboxwebsrv -H 127.0.0.1 --background 
 execute the command from the same user of the config.php of phpVirtualbox.
-Like this::
+Like this
+
+::
+
     su cuckoo
     /usr/lib/virtualbox/vboxwebsrv -H 127.0.0.1 --background
 
 Configure HostOnly adapter to the virtual machine, you can list your virtual
 machines with the *VBoxManage list vms* command.
-Use the user created for cuckoo. For my Windows_7 virtual machine::
+Use the user created for cuckoo. For my Windows_7 virtual machine
+
+::
+
     su cuckoo
     vboxmanage modifyvm "windows_7" --hostonlyadapter1 vboxnet0
     
 Start the virtual machine with *vboxmanage startvm* command.
-Use the user created for cuckoo. For example::
+Use the user created for cuckoo. For example
+
+::
+
     su cuckoo
     vboxmanage startvm "windows_7" --type headless
 
 Making the screenshot using the user created for cuckoo. 
-For my windows_7 virtual machine I want create a snapshoot called cuckoosnap::
+For my windows_7 virtual machine I want create a snapshoot called cuckoosnap
+
+::
 
     su cuckoo
     VBoxManage snapshot "windows_7" take "cuckoosnap" --pause
@@ -251,7 +312,10 @@ For my windows_7 virtual machine I want create a snapshoot called cuckoosnap::
     VBoxManage snapshot "windows_7" restorecurrent
 
 Add the new virtual machine with the new snapshot and with the static IP
-address to the *conf/virtualbox.conf:*::
+address to the *conf/virtualbox.conf:*
+
+::
+
     mode = headless
     machines = cuckoo1
     [cuckoo1]
