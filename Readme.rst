@@ -73,7 +73,7 @@ Quickstart guide
   cd cuckoo
   python cuckoo.py
 
-.. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20cuckoo%20working.png
+.. image:: /../screenshots/github%20working.png?raw=true
 
 * Execute also webpy (default port 8080)
 
@@ -82,7 +82,7 @@ Quickstart guide
   cd cuckoo/utils
   python web.py
 
-.. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20webpy.png
+.. image:: /../screenshots/github%20webpy.png?raw=true
 
 * Execute also django using port 6969
 
@@ -91,7 +91,7 @@ Quickstart guide
   cd cuckoo/web
   python manage.py runserver 0.0.0.0:6969
 
-.. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20django.png
+.. image:: /../screenshots/github%20django.png?raw=true
 
 Script features
 =================
@@ -241,7 +241,7 @@ For common issues and problems visit: http://sourceforge.net/p/phpvirtualbox/wik
 
 Install a RDP Client to access to virtual machines (you can use the *Windows Remote Desktop client*).
 
-.. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20access.png
+.. image:: /../screenshots/github%20access.png?raw=true
 
 Install cuckoo as daemon
 ==========================
