@@ -42,14 +42,20 @@ Quickstart guide
 
 * Execute the script: *bash cuckooautoinstall.sh*
 
-* Add a password (as root) for the user *'cuckoo'* created by the script::
+* Add a password (as root) for the user *'cuckoo'* created by the script
+
+::
     passwd cuckoo
 
 * Create the virtual machines `http://docs.cuckoosandbox.org/en/latest/installation/guest/`
-  or import virtual machines::
+  or import virtual machines
+
+::
   VBoxManage import virtual_machine.ova
 
-* Add to the virtual machines with HostOnly option using vboxnet0::
+* Add to the virtual machines with HostOnly option using vboxnet0
+
+::
   vboxmanage modifyvm “virtual_machine" --hostonlyadapter1 vboxnet0
 
 * Configure cuckoo (`http://docs.cuckoosandbox.org/en/latest/installation/host/configuration/` )
