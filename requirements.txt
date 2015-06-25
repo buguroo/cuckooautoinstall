@@ -1,9 +1,0 @@
-pymongo
-django
-pydeep
-maec
-py3compat
-lxml
-cybox
-distorm3
-pycrypto
