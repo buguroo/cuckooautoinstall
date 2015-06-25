@@ -47,6 +47,19 @@ clone_repos(){
     git clone https://github.com/plusvic/yara
 }
 
+install_volatility(){
+    wget http://downloads.volatilityfoundation.org/releases/2.4/volatility-2.4.tar.gz
+    tar xvf volatility-2.4.tar.gz
+    cd volatility-2.4/
+    $SUDO python setup.py build
+    $SUDO python setup.py install
+}
+
+create_cuckoo_user(){
+    $SUDO adduser  --disabled-password -gecos "" cuckoo
+    $SUDO usermod -G vboxusers cuckoo
+}
+
 clone_cuckoo(){
     cd /home/cuckoo/
     $SUDO git clone https://github.com/cuckoobox/cuckoo
@@ -62,11 +75,6 @@ create_hostonly_iface(){
     $SUDO sysctl -w net.ipv4.ip_forward=1
 }
 
-create_cuckoo_user(){
-    $SUDO adduser  --disabled-password -gecos "" cuckoo
-    $SUDO usermod -G vboxusers cuckoo
-}
-
 setcap(){
     $SUDO setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
 }
@@ -74,14 +82,14 @@ setcap(){
 fix_django_version(){
     cd /home/cuckoo/
     python -c "import django; from distutils.version import LooseVersion; import sys; sys.exit(LooseVersion(django.get_version()) <= LooseVersion('1.5'))" && { 
-        egrep -i "templates = \(.*\)" cuckoo/web/web/settings.py || sed -i '/TEMPLATE_DIRS/{ N; s/.*/TEMPLATE_DIRS = \( \("templates"\),/; }' cuckoo/web/web/settings.py
+        egrep -i "templates = \(.*\)" cuckoo/web/web/settings.py || $SUDO sed -i '/TEMPLATE_DIRS/{ N; s/.*/TEMPLATE_DIRS = \( \("templates"\),/; }' cuckoo/web/web/settings.py
     }
     cd $TMPDIR
 }
 
 enable_mongodb(){
     cd /home/cuckoo/
-    sed -i '/\[mongodb\]/{ N; s/.*/\[mongodb\]\nenabled = yes/; }' cuckoo/conf/reporting.conf
+    $SUDO sed -i '/\[mongodb\]/{ N; s/.*/\[mongodb\]\nenabled = yes/; }' cuckoo/conf/reporting.conf
     cd $TMPDIR
 }
 
@@ -109,7 +117,17 @@ build_yara(){
     cd ${TMPDIR}
 }
 
-
+pip(){
+    $SUDO pip install pymongo --upgrade
+    $SUDO pip install django --upgrade
+    $SUDO pip install pydeep --upgrade
+    $SUDO pip install maec --upgrade
+    $SUDO pip install py3compat --upgrade
+    $SUDO pip install lxml --upgrade
+    $SUDO pip install cybox --upgrade
+    $SUDO pip install distorm3 --upgrade
+    $SUDO pip install pycrypto --upgrade
+}
 
 cd ${TMPDIR}
 echo ${VIRTUALBOX_REP} |$SUDO tee /etc/apt/sources.list.d/virtualbox.list
@@ -118,14 +136,16 @@ $SUDO apt-get update
 $SUDO apt-get install -y  ${packages["${RELEASE}"]}
 $SUDO apt-get install -y $CUSTOM_PKGS
 $SUDO apt-get -y install 
-$SUDO pip install -r ${ORIG_DIR}/requirements.txt
 
+
+pip
+create_cuckoo_user
 clone_repos
 clone_cuckoo
 build_jansson
 build_yara
+install_volatility
 create_hostonly_iface
-create_cuckoo_user
 setcap
 fix_django_version
 enable_mongodb
