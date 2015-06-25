@@ -34,6 +34,7 @@ Authors
 -------
 
 `David Reguera García - Dreg <http://github.com/David-Reguera-Garcia-Dreg>`_ - `dreguera@buguroo.com <mailto:dreguera@buguroo.com>`_
+
 `David Francos Cuartero - XayOn <http://github.com/Xayon>`_ - `dfrancos@buguroo.com <mailto:dfrancos@buguroo.com>`_
 
 
@@ -41,6 +42,8 @@ Quickstart guide
 ================
 
 * Execute the script: *bash cuckooautoinstall.sh*
+
+.. image:: /../screenshots/cuckooautoinstall.png?raw=true
 
 * Add a password (as root) for the user *'cuckoo'* created by the script
 
