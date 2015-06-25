@@ -45,34 +45,46 @@ Quickstart guide
 * Add a password (as root) for the user *'cuckoo'* created by the script
 
 ::
+
     passwd cuckoo
 
 * Create the virtual machines `http://docs.cuckoosandbox.org/en/latest/installation/guest/`
   or import virtual machines
 
 ::
+
   VBoxManage import virtual_machine.ova
 
 * Add to the virtual machines with HostOnly option using vboxnet0
 
 ::
+
   vboxmanage modifyvm “virtual_machine" --hostonlyadapter1 vboxnet0
 
 * Configure cuckoo (`http://docs.cuckoosandbox.org/en/latest/installation/host/configuration/` )
 
-* Execute cuckoo (check the image output)::
+* Execute cuckoo (check the image output)
+
+::
+
   cd cuckoo
   python cuckoo.py
 
 .. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20cuckoo%20working.png
 
-* Execute also webpy (default port 8080)::
+* Execute also webpy (default port 8080)
+
+::
+
   cd cuckoo/utils
   python web.py
 
 .. image:: https://raw.githubusercontent.com/buguroo/cuckooautoinstall/images/github%20webpy.png
 
-* Execute also django using port 6969::
+* Execute also django using port 6969
+
+::
+
   cd cuckoo/web
   python manage.py runserver 0.0.0.0:6969
 
