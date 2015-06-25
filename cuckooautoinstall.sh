@@ -45,8 +45,8 @@ install_volatility(){
     wget http://downloads.volatilityfoundation.org/releases/2.4/volatility-2.4.tar.gz
     tar xvf volatility-2.4.tar.gz
     cd volatility-2.4/
-    python setup.py build
-    python setup.py install
+    $SUDO python setup.py build
+    $SUDO python setup.py install
 }
 
 create_cuckoo_user(){
