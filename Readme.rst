@@ -73,7 +73,7 @@ Quickstart guide
   cd cuckoo
   python cuckoo.py
 
-.. image:: /../screenshots/github%20working.png?raw=true
+.. image:: /../screenshots/github%20cuckoo%20working.png?raw=true
 
 * Execute also webpy (default port 8080)
 
