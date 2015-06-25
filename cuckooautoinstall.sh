@@ -25,8 +25,19 @@ ORIG_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
 VIRTUALBOX_REP="deb http://download.virtualbox.org/virtualbox/debian $RELEASE contrib"
 
 declare -a packages
+declare -a python_packages 
+
 packages["debian"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
 packages["ubuntu"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
+python_packages=(pymongo django pydeep maec py3compat lxml cybox distorm3 pycrypto)
+
+[[ $1 == "--verbose" ]] && {
+    LOG=/dev/stdout
+} || {
+    LOG=$(mktemp)
+}
+
+echo "Logging enabled on ${LOG}"
 
 [[ $UID != 0 ]] && {
     type -f $SUDO || {
@@ -40,6 +51,11 @@ packages["ubuntu"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt
 [[ ! -e /etc/debian_version ]] && {
     echo "This script currently works only on debian-based (debian, ubuntu...) distros"
     exit 1
+}
+
+run_and_log(){
+    echo $2;
+    $1 &> ${LOG}
 }
 
 clone_repos(){
@@ -118,34 +134,47 @@ build_yara(){
 }
 
 pip(){
-    $SUDO pip install pymongo --upgrade
-    $SUDO pip install django --upgrade
-    $SUDO pip install pydeep --upgrade
-    $SUDO pip install maec --upgrade
-    $SUDO pip install py3compat --upgrade
-    $SUDO pip install lxml --upgrade
-    $SUDO pip install cybox --upgrade
-    $SUDO pip install distorm3 --upgrade
-    $SUDO pip install pycrypto --upgrade
+    # TODO: Calling upgrade here should be optional.
+    # Unless we make all of this into a virtualenv, wich seems like the
+    # correct way to follow
+    for package in ${@}; do $SUDO pip install ${package} --upgrade; done
 }
 
-cd ${TMPDIR}
-echo ${VIRTUALBOX_REP} |$SUDO tee /etc/apt/sources.list.d/virtualbox.list
-wget -O - https://www.virtualbox.org/download/oracle_vbox.asc | $SUDO apt-key add -
-$SUDO apt-get update
-$SUDO apt-get install -y  ${packages["${RELEASE}"]}
-$SUDO apt-get install -y $CUSTOM_PKGS
-$SUDO apt-get -y install 
+prepare_virtualbox(){
+    cd ${TMPDIR}
+    echo ${VIRTUALBOX_REP} |$SUDO tee /etc/apt/sources.list.d/virtualbox.list
+    wget -O - https://www.virtualbox.org/download/oracle_vbox.asc | $SUDO apt-key add -
+}
 
+install_packages(){
+    $SUDO apt-get update
+    $SUDO apt-get install -y ${packages["${RELEASE}"]}
+    $SUDO apt-get install -y $CUSTOM_PKGS
+    $SUDO apt-get -y install 
+}
 
-pip
-create_cuckoo_user
-clone_repos
-clone_cuckoo
-build_jansson
-build_yara
-install_volatility
-create_hostonly_iface
-setcap
-fix_django_version
-enable_mongodb
+# Install packages
+run_and_log prepare_virtualbox "Getting virtualbox repo ready"
+run_and_log install_packages "Installing packages ${packages[$RELEASE]}"
+
+# Install python packages
+run_and_log pip ${python_packages[@]} "Installing python packages: ${python_packages[@]}"
+
+# Create user and clone repos
+run_and_log create_cuckoo_user "Creating cuckoo user"
+run_and_log clone_repos "Cloning repositories"
+run_and_log clone_cuckoo "Cloning cuckoo repository"
+
+# Build packages
+run_and_log build_jansson "Building and installing jansson"
+run_and_log build_yara "Building and installing yara"
+run_and_log install_volatility "Installing volatility"
+
+# Configuration
+run_and_log fix_django_version "Fixing django problems on old versions"
+run_and_log enable_mongodb "Enabling mongodb in cuckoo"
+
+# Networking (latest, because sometimes it crashes...)
+run_and_log create_hostonly_iface "Creating hostonly interface for cuckoo"
+run_and_log setcap "Setting capabilities"
+
