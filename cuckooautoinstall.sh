@@ -1,5 +1,35 @@
 #!/bin/bash
 
+source /etc/os-release
+
+# Configuration variables. You can override these in config.
+SUDO="sudo"
+TMPDIR=$(mktemp -d)
+RELEASE=$(lsb_release -cs)
+CUCKOO_USER="cuckoo"
+CUSTOM_PKGS=""
+ORIG_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
+VOLATILITY_URL="http://downloads.volatilityfoundation.org/releases/2.4/volatility-2.4.tar.gz"
+VIRTUALBOX_REP="deb http://download.virtualbox.org/virtualbox/debian $RELEASE contrib"
+CUCKOO_REPO='https://github.com/cuckoobox/cuckoo'
+YARA_REPO="https://github.com/plusvic/yara"
+JANSSON_REPO="https://github.com/akheron/jansson"
+
+LOG=$(mktemp)
+UPGRADE=false
+
+declare -a packages
+declare -a python_packages 
+
+packages["debian"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
+packages["ubuntu"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
+python_packages=(pymongo django pydeep maec py3compat lxml cybox distorm3 pycrypto)
+log_icon="\e[31m✓\e[0m"
+
+
+# -
+
+print_copy(){
 cat <<EO
 ┌─────────────────────────────────────────────────────────┐
 │                CuckooAutoInstall 0.2                    │
@@ -8,52 +38,53 @@ cat <<EO
 │            Buguroo Offensive Security - 2015            │
 └─────────────────────────────────────────────────────────┘
 EO
-
-source /etc/os-release
-source config
-
-get_default(){
-    what=$1; default=$2
-    [[ ${DEFAULTS[${what}]} ]] && echo ${DEFAULTS[${what}]} || echo $default
 }
 
-SUDO="sudo"
-TMPDIR=$(mktemp -d)
-RELEASE=$(get_default 'RELEASE' $(lsb_release -cs))
-CUSTOM_PKGS=$(get_default 'CUSTOM_PKGS' ' ')
-ORIG_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
-VIRTUALBOX_REP="deb http://download.virtualbox.org/virtualbox/debian $RELEASE contrib"
-CUCKOO_REPO=$(get_default 'cuckoo_repo' 'https://github.com/cuckoobox/cuckoo')
-
-declare -a packages
-declare -a python_packages 
-
-packages["debian"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
-packages["ubuntu"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
-python_packages=($(get_default 'python_pkgs' 'pymongo django pydeep maec py3compat lxml cybox distorm3 pycrypto'))
-log_icon="\e[31m✓\e[0m"
-
-[[ $1 == "--verbose" ]] && {
-    LOG=/dev/stdout
-} || {
-    LOG=$(mktemp)
-}
-
-echo "Logging enabled on ${LOG}"
-
-[[ $UID != 0 ]] && {
-    type -f $SUDO || {
-        echo "You're not root and you don't have $SUDO, please become root or install $SUDO before executing $0"
-        exit
+check_viability(){
+    [[ $UID != 0 ]] && {
+        type -f $SUDO || {
+            echo "You're not root and you don't have $SUDO, please become root or install $SUDO before executing $0"
+            exit
+        }
+    } || {
+        SUDO=""
     }
-} || {
-    SUDO=""
+
+    [[ ! -e /etc/debian_version ]] && {
+        echo  "This script currently works only on debian-based (debian, ubuntu...) distros"
+        exit 1
+    }
 }
 
-[[ ! -e /etc/debian_version ]] && {
-    echo  "This script currently works only on debian-based (debian, ubuntu...) distros"
+print_help(){
+    cat <<EOH
+Usage: $0 [--verbose|-v] [--help|-h] [--upgrade|-u]
+
+    --verbose   Print output to stdout instead of temp logfile
+    --help      This help menu
+    --upgrade   Use newer volatility, yara and jansson versions (install from source)
+
+EOH
     exit 1
 }
+
+setopts(){
+    optspec=":hvu-:"
+    while getopts "$optspec" optchar; do
+        case "${optchar}" in
+            -)
+                case "${OPTARG}" in
+                    help) print_help ;;
+                    upgrade) UPGRADE=true ;;
+                    verbose) LOG=/dev/stdout ;;
+                esac;;
+            h) print_help ;;
+            v) LOG=/dev/stdout;;
+            u) UPGRADE=true;;
+        esac
+    done
+}
+
 
 run_and_log(){
     echo -e "${log_icon} ${2}"
@@ -61,27 +92,19 @@ run_and_log(){
 }
 
 clone_repos(){
-    git clone https://github.com/akheron/jansson
-    git clone https://github.com/plusvic/yara
-}
-
-install_volatility(){
-    wget http://downloads.volatilityfoundation.org/releases/2.4/volatility-2.4.tar.gz
-    tar xvf volatility-2.4.tar.gz
-    cd volatility-2.4/
-    $SUDO python setup.py build
-    $SUDO python setup.py install
+    git clone ${JANSSON_REPO}
+    git clone ${YARA_REPO}
 }
 
 create_cuckoo_user(){
-    $SUDO adduser  --disabled-password -gecos "" cuckoo
-    $SUDO usermod -G vboxusers cuckoo
+    $SUDO adduser  --disabled-password -gecos "" ${CUCKOO_USER}
+    $SUDO usermod -G vboxusers ${CUCKOO_USER}
 }
 
 clone_cuckoo(){
-    cd /home/cuckoo/
+    cd ~${CUCKOO_USER}
     $SUDO git clone $CUCKOO_REPO
-    $SUDO chown -R cuckoo:cuckoo cuckoo
+    $SUDO chown -R ${CUCKOO_USER}:${CUCKOO_USER} cuckoo
     cd $TMPDIR
 }
 
@@ -98,7 +121,7 @@ setcap(){
 }
 
 fix_django_version(){
-    cd /home/cuckoo/
+    cd ~${CUCKOO_USER}
     python -c "import django; from distutils.version import LooseVersion; import sys; sys.exit(LooseVersion(django.get_version()) <= LooseVersion('1.5'))" && { 
         egrep -i "templates = \(.*\)" cuckoo/web/web/settings.py || $SUDO sed -i '/TEMPLATE_DIRS/{ N; s/.*/TEMPLATE_DIRS = \( \("templates"\),/; }' cuckoo/web/web/settings.py
     }
@@ -106,7 +129,7 @@ fix_django_version(){
 }
 
 enable_mongodb(){
-    cd /home/cuckoo/
+    cd ~${CUCKOO_USER}
     $SUDO sed -i '/\[mongodb\]/{ N; s/.*/\[mongodb\]\nenabled = yes/; }' cuckoo/conf/reporting.conf
     cd $TMPDIR
 }
