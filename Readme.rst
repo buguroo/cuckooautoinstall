@@ -45,6 +45,47 @@ Quickstart guide
 
 .. image:: /../screenshots/cuckooautoinstall.png?raw=true
 
+
+The script does accept a configuration file in the form of a simple
+bash script with options such as:
+
+::
+
+    SUDO="sudo"
+    TMPDIR=$(mktemp -d)
+    RELEASE=$(lsb_release -cs)
+    CUCKOO_USER="cuckoo"
+    CUSTOM_PKGS=""
+    ORIG_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}"   )" && pwd   )
+    VOLATILITY_URL="http://downloads.volatilityfoundation.org/releases/2.4/volatility-2.4.tar.gz"
+    VIRTUALBOX_REP="deb http://download.virtualbox.org/virtualbox/debian $RELEASE contrib"
+    CUCKOO_REPO='https://github.com/cuckoobox/cuckoo'
+    YARA_REPO="https://github.com/plusvic/yara"
+    JANSSON_REPO="https://github.com/akheron/jansson"
+
+    LOG=$(mktemp)
+    UPGRADE=false
+
+You can override any of these variables in the config file.
+
+It accepts parameters
+
+::
+
+    ┌─────────────────────────────────────────────────────────┐
+    │                CuckooAutoInstall 0.2                    │
+    │ David Reguera García - Dreg <dreguera@buguroo.com>      │
+    │ David Francos Cuartero - XayOn <dfrancos@buguroo.com>   │
+    │            Buguroo Offensive Security - 2015            │
+    └─────────────────────────────────────────────────────────┘
+    Usage: cuckooautoinstall.sh [--verbose|-v] [--help|-h] [--upgrade|-u]
+
+        --verbose   Print output to stdout instead of temp logfile
+        --help      This help menu
+        --upgrade   Use newer volatility, yara and jansson versions (install from source)
+
+For most setups, --upgrade is recommended always.
+
 * Add a password (as root) for the user *'cuckoo'* created by the script
 
 ::
@@ -232,6 +273,7 @@ phpVirtualbox. In my (old) Virtualbox version you can use this command
 And for new versions
 
 ::
+
     sudo VBoxManage setproperty websrvauthlibrary default
     sudo /etc/init.d/vboxweb-service restart
 
@@ -274,6 +316,7 @@ Edit */etc/supervisor/conf.d/cuckoo.conf* , like
 Reload supervisor
 
 ::
+
   sudo supervisorctl reload
 
 Import OVF (.OVA) Virtual Machines
