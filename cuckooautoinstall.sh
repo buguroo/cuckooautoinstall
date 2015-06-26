@@ -137,19 +137,18 @@ enable_mongodb(){
 build_jansson(){
     # Not cool =(
     cd ${TMPDIR}/jansson
-    autoreconf -vi
+    autoreconf -vi --force
     ./configure
     make
     make check
     $SUDO make install
-    $SUDO autoreconf -i --force
     cd ${TMPDIR}
 }
 
 build_yara(){
     cd ${TMPDIR}/yara
     ./bootstrap.sh
-    $SUDO autoreconf -i --force
+    $SUDO autoreconf -vi --force
     ./configure --enable-cuckoo --enable-magic
     make
     $SUDO make install
