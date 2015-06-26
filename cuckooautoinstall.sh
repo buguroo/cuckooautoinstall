@@ -157,6 +157,14 @@ build_yara(){
     cd ${TMPDIR}
 }
 
+build_volatility(){
+    wget $VOLATILITY_URL
+    tar xvf volatility-2.4.tar.gz
+    cd volatility-2.4/
+    $SUDO python setup.py build
+    $SUDO python setup.py install
+}
+
 pip(){
     # TODO: Calling upgrade here should be optional.
     # Unless we make all of this into a virtualenv, wich seems like the
