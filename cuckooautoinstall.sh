@@ -185,9 +185,26 @@ install_packages(){
     $SUDO apt-get -y install 
 }
 
+# Init.
+
+print_copy
+check_viability
+setopts ${@}
+
+# Load config
+
+source config
+
+echo "Logging enabled on ${LOG}"
+
+# If we're notupgrading to recent yara, jansson and volatility, install them as packages.
+[[ $UPGRADE != true ]] && {
+    CUSTOM_PKGS="volatility yara python-yara libyara3 libjansson4 ${CUSTOM_PKGS}"
+}
+
 # Install packages
 run_and_log prepare_virtualbox "Getting virtualbox repo ready"
-run_and_log install_packages "Installing packages ${packages[$RELEASE]}"
+run_and_log install_packages "Installing packages ${CUSTOM_PKGS} and ${packages[$RELEASE]}"
 
 # Install python packages
 run_and_log pip ${python_packages[@]} "Installing python packages: ${python_packages[@]}"
@@ -198,9 +215,11 @@ run_and_log clone_repos "Cloning repositories"
 run_and_log clone_cuckoo "Cloning cuckoo repository"
 
 # Build packages
-run_and_log build_jansson "Building and installing jansson"
-run_and_log build_yara "Building and installing yara"
-run_and_log install_volatility "Installing volatility"
+[[ $UPGRADE == true ]] && {
+    run_and_log build_jansson "Building and installing jansson"
+    run_and_log build_yara "Building and installing yara"
+    run_and_log build_volatility "Installing volatility"
+}
 
 # Configuration
 run_and_log fix_django_version "Fixing django problems on old versions"
