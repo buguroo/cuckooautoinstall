@@ -221,7 +221,7 @@ You may want to read:
 
 * `Remote <./doc/Remote.rst>`_ - Enabling remote administration of VMS and VBox
 * `OVA <./doc/OVA.rst>`_ - Working with OVA images
-* `Pafish <./doc/Pafish.rst>`_ Pafish - Checking if your VM is detectable by malware
+* `Antivm <./doc/Pafish.rst>`_ How to deal with malware that has VM detection techniques
 * `VMcloak <./doc/Vmcloak.rst>`_ VMCloak - Cuckoo windows virtual machines management
 
 TODO
