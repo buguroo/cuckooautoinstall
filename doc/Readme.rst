@@ -41,9 +41,18 @@ Authors
 Quickstart guide
 ================
 
-* Execute the script: *bash cuckooautoinstall.bash*
+* Clone this repo & execute the script: *bash cuckooautoinstall.bash*
 
 .. image:: /../screenshots/cuckooautoinstall.png?raw=true
+
+
+If you trust us, your network setup and a lot of more variables enough
+(wich is totally not-recommended) and you're as lazy as it gets, you can
+execute as a normal user if you've got sudo configured:
+
+::
+
+    wget -O - https://raw.githubusercontent.com/buguroo/cuckooautoinstall/master/cuckooautoinstall.bash | bash
 
 
 The script does accept a configuration file in the form of a simple
