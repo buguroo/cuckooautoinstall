@@ -33,9 +33,9 @@ unsupported ones.
 Authors
 -------
 
-`David Reguera García - Dreg <http://github.com/David-Reguera-Garcia-Dreg>`_ - `dreguera@buguroo.com <mailto:dreguera@buguroo.com>`_
+`David Reguera García - Dreg <http://github.com/David-Reguera-Garcia-Dreg>`_ - `dreguera@buguroo.com <mailto:dreguera@buguroo.com>`_ - `@fr33project <https://twitter.com/fr33project>`_ 
 
-`David Francos Cuartero - XayOn <http://github.com/Xayon>`_ - `dfrancos@buguroo.com <mailto:dfrancos@buguroo.com>`_
+`David Francos Cuartero - XayOn <http://github.com/Xayon>`_ - `dfrancos@buguroo.com <mailto:dfrancos@buguroo.com>`_ - `@davidfrancos <https://twitter.com/davidfrancos>`_
 
 
 Quickstart guide
