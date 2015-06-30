@@ -227,7 +227,6 @@ You may want to read:
 TODO
 ====
 
-* Improve pafish documentation on methods to avoid malware vm detection techniques
 * Improve documentation
 
 Contributing
