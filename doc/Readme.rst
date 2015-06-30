@@ -41,7 +41,7 @@ Authors
 Quickstart guide
 ================
 
-* Execute the script: *bash cuckooautoinstall.sh*
+* Execute the script: *bash cuckooautoinstall.bash*
 
 .. image:: /../screenshots/cuckooautoinstall.png?raw=true
 
@@ -78,7 +78,7 @@ It accepts parameters
     │ David Francos Cuartero - XayOn <dfrancos@buguroo.com>   │
     │            Buguroo Offensive Security - 2015            │
     └─────────────────────────────────────────────────────────┘
-    Usage: cuckooautoinstall.sh [--verbose|-v] [--help|-h] [--upgrade|-u]
+    Usage: cuckooautoinstall.bash [--verbose|-v] [--help|-h] [--upgrade|-u]
 
         --verbose   Print output to stdout instead of temp logfile
         --help      This help menu
