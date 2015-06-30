@@ -217,8 +217,8 @@ Extra help
 
 You may want to read:
 
-    * `Remote` - Enabling remote administration of VMS and VBox
-    * `OVA` - Working with OVA images
+* `Remote` - Enabling remote administration of VMS and VBox
+* `OVA` - Working with OVA images
 
 TODO
 ====
