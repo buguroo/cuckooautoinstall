@@ -25,6 +25,8 @@ packages["debian"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt
 packages["ubuntu"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
 python_packages=(pymongo django pydeep maec py3compat lxml cybox distorm3 pycrypto)
 log_icon="\e[31m✓\e[0m"
+log_icon_ok="\e[32m✓\e[0m"
+log_icon_nok="\e[31m✗\e[0m"
 
 
 # -
@@ -87,8 +89,12 @@ setopts(){
 
 
 run_and_log(){
-    echo -e "${log_icon} ${2}"
-    $1 &> ${LOG}
+    $1 &> ${LOG} && {
+        _log_icon=$log_icon_ok
+    } || {
+        _log_icon=$log_icon_nok
+    }
+    echo -e "${_log_icon} ${2}"
 }
 
 clone_repos(){
