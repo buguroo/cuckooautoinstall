@@ -107,11 +107,11 @@ For most setups, --upgrade is recommended always.
 
 * Configure cuckoo (`http://docs.cuckoosandbox.org/en/latest/installation/host/configuration/` )
 
-* Execute cuckoo (check the image output)
+* Execute cuckoo 
 
 ::
 
-  cd cuckoo
+  cd ~cuckoo/cuckoo
   python cuckoo.py
 
 .. image:: /../screenshots/github%20cuckoo%20working.png?raw=true
@@ -120,7 +120,7 @@ For most setups, --upgrade is recommended always.
 
 ::
 
-  cd cuckoo/utils
+  cd ~cuckoo/cuckoo/utils
   python web.py
 
 .. image:: /../screenshots/github%20webpy.png?raw=true
@@ -129,7 +129,7 @@ For most setups, --upgrade is recommended always.
 
 ::
 
-  cd cuckoo/web
+  cd ~cuckoo/cuckoo/web
   python manage.py runserver 0.0.0.0:6969
 
 .. image:: /../screenshots/github%20django.png?raw=true
@@ -164,126 +164,18 @@ Fixes the *"TEMPLATE_DIRS setting must be a tuple"* error when running python ma
 ::
 
         TEMPLATE_DIRS = (
-        "templates"
+            "templates"
         )
+
+
+becomes
+
+::
+
         TEMPLATE_DIRS = (
-        ("templates"),
+            ("templates"),
         )
 
-Remote access to Virtual Machines via RDP + Remote control of VirtualBox (Optional)
-===================================================================================
-
-Download and install Oracle VM VirtualBox Extension Pack from `https://www.virtualbox.org/wiki/Downloads`
-
-Download the VirtualBox Extension Pack for your Distribution and for your Virtualbox version: *vboxmanage --version*. For example
-
-::
-
-    ~# vboxmanage --version
-    4.1.18_Debianr78361
-    #(found this version in Extension Pack Link for All Platforms, in VirtualBox 4.1.18:  https://www.virtualbox.org/wiki/Download_Old_Builds_4_1)
-    wget http://download.virtualbox.org/virtualbox/4.1.18/Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
-
-Install the Extension Pack with: *VBoxManage extpack install*. For example for my 4.1.18_Debianr78361
-
-::
-
-    sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
-
-Create the file /etc/default/virtualbox and add the user. I am using the user 'cuckoo' created by the script, this user must be in vboxusers
-
-::
-
-    VBOXWEB_USER=cuckoo
-
-Download and install *phpVirtualbox*: An open source, AJAX implementation of
-the VirtualBox user interface written in PHP. 
-As a modern web interface, it allows you to access and control remote VirtualBox instances. 
-phpVirtualBox is designed to allow users to administer VirtualBox in a headless environment 
-mirroring the VirtualBox GUI through its web interface. 
-
-http://sourceforge.net/projects/phpvirtualbox/
-
-Install packages
-
-::
-
-    sudo apt-get install nginx php5-common php5-mysql php5-fpm php-pear unzip
-
-Start ngnix
-
-::
-
-    sudo /etc/init.d/nginx start
-
-Enable php in ngnix config.
-
-Reload nginx
-
-::
-
-    sudo /etc/init.d/nginx reload
-
-Install the last phpVirtualBox and extract it in the nginx web.
-phpVirtualBox versioning is aligned with VirtualBox versioning in that the major 
-and minor release numbers will maintain compatibility
-
-::
-
-    phpVirtualBox 4.0-x will always be compatible with VirtualBox 4.0.x. 
-    Regardless of what the latest x revision is.     
-    phpVirtualBox 4.2-x will always be compatible with VirtualBox 4.2.x, etc.. 
-    for VirtualBox 4.3 - phpvirtualbox-4.3-x.zip 
-    for VirtualBox 4.2 - phpvirtualbox-4.2-x.zip 
-    for VirtualBox 4.1 - phpvirtualbox-4.1-x.zip 
-    for VirtualBox 4.0 - phpvirtualbox-4.0-x.zip 
-
-I am using Virtualbox 4.1.18_Debianr78361 and I found a version for my version: phpvirtualbox-4.1-11.zip http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/
-
-Download and extract the CORRECT phpvirtualbox version for your Virtualbox version in the nginx public web path
-
-::
-
-    cd /usr/share/nginx/www
-    sudo wget -L -c http://sourceforge.net/projects/phpvirtualbox/files/Older%20versions/phpvirtualbox-4.1-11.zip/download -O phpvirtualbox.zip 
-    sudo unzip phpvirtualbox.zip
-
-Copy the config sample like default config
-
-::
-
-    cd phpvirtualbox-4.1-11
-    sudo cp config.php-example config.php
-
-Edit config.php and add the cuckoo user
-
-::
-
-    var $username = 'cuckoo';
-    var $password = '12345';
-
-Start vboxweb service using the *same user of the config.php* of the 
-phpVirtualbox. In my (old) Virtualbox version you can use this command
-
-::
-
-    su cuckoo
-    vboxwebsrv -H 127.0.0.1 --background
-
-And for new versions
-
-::
-
-    sudo VBoxManage setproperty websrvauthlibrary default
-    sudo /etc/init.d/vboxweb-service restart
-
-Access to the phpvirtualbox web, the default password and user for the web is *admin*.
-
-For common issues and problems visit: http://sourceforge.net/p/phpvirtualbox/wiki/Common%20phpVirtualBox%20Errors%20and%20Issues/
-
-Install a RDP Client to access to virtual machines (you can use the *Windows Remote Desktop client*).
-
-.. image:: /../screenshots/github%20access.png?raw=true
 
 Install cuckoo as daemon
 ==========================
@@ -319,87 +211,29 @@ Reload supervisor
 
   sudo supervisorctl reload
 
-Import OVF (.OVA) Virtual Machines
-==================================
-Read first: http://docs.cuckoosandbox.org/en/latest/installation/guest/
 
-Normally I create the Virtual Machine from my Windows and after I export the 
-virtual machine using the file menu in Virtual Box. I export the virtual 
-machine using the OVF format (.OVA). Then I copy the virtual machine 
-to my server using sftp.
+Extra help
+==========
 
-You can use the *VBoxManage import* command to import a virtual machine. 
-Use the user created for cuckoo. Here an example to import my 
-Virtual Machine "windows_7.ova" created from VirtualBox in Windows
+You may want to read:
 
-::
-
-    su cuckoo
-    VBoxManage import windows_7.ova
-
-If you are using phpVirtualbox with a old VirtualBox 
-version and you are running the command 
-/usr/lib/virtualbox/vboxwebsrv -H 127.0.0.1 --background 
-execute the command from the same user of the config.php of phpVirtualbox.
-Like this
-
-::
-
-    su cuckoo
-    /usr/lib/virtualbox/vboxwebsrv -H 127.0.0.1 --background
-
-Configure HostOnly adapter to the virtual machine, you can list your virtual
-machines with the *VBoxManage list vms* command.
-Use the user created for cuckoo. For my Windows_7 virtual machine
-
-::
-
-    su cuckoo
-    vboxmanage modifyvm "windows_7" --hostonlyadapter1 vboxnet0
-    
-Start the virtual machine with *vboxmanage startvm* command.
-Use the user created for cuckoo. For example
-
-::
-
-    su cuckoo
-    vboxmanage startvm "windows_7" --type headless
-
-Making the screenshot using the user created for cuckoo. 
-For my windows_7 virtual machine I want create a snapshoot called cuckoosnap
-
-::
-
-    su cuckoo
-    VBoxManage snapshot "windows_7" take "cuckoosnap" --pause
-    VBoxManage controlvm "windows_7" poweroff
-    VBoxManage snapshot "windows_7" restorecurrent
-
-Add the new virtual machine with the new snapshot and with the static IP
-address to the *conf/virtualbox.conf:*
-
-::
-
-    mode = headless
-    machines = cuckoo1
-    [cuckoo1]
-    label = windows_7
-    platform = Windows
-    ip = 192.168.56.130
-    snapshot = cuckoosnap
-    interface = vboxnet0
-
-Restart cuckoo.
+    * `Remote` - Enabling remote administration of VMS and VBox
+    * `OVA` - Working with OVA images
 
 TODO
 ====
-* Add vmcloak info to README: http://vmcloak.org/ Automated Virtual Machine Generation and Cloaking tailored for Cuckoo Sandbox.
-* Add Pafish info to README: https://github.com/a0rtega/pafish The objective of this project is to collect usual tricks seen in malware samples. This allows us to study it, and test if our analysis environments are properly implemented.
-* Add hardening cuckoo info to README.
-* Test the script in more environments
-* Add documentation on new configuration system
+* Add vmcloak info to docs: http://vmcloak.org/ Automated Virtual Machine Generation and Cloaking tailored for Cuckoo Sandbox.
+* Add Pafish info to docs: https://github.com/a0rtega/pafish The objective of this project is to collect usual tricks seen in malware samples. This allows us to study it, and test if our analysis environments are properly implemented.
+* Add hardening cuckoo info to docs
 
-Pull requests are always welcome
---------------------------------
+Contributing
+============
 
-=)
+This project is licensed as GPL3+ as you can see in "LICENSE" file.
+All pull requests are welcome, having in mind that:
+
+- The scripting style must be compliant with the current one
+- New features must be in sepparate branches (way better if it's git-flow =) )
+- Please, check that it works correctly before submitting a PR.
+
+We'd probably be answering to PRs in a 7-14 day period, please be patient.
