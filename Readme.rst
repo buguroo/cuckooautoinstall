@@ -217,8 +217,8 @@ Extra help
 
 You may want to read:
 
-* `./doc/Remote.rst` - Enabling remote administration of VMS and VBox
-* `./doc/OVA.rst` - Working with OVA images
+* `Remote <./doc/Remote.rst>`_ - Enabling remote administration of VMS and VBox
+* `OVA <./doc/OVA.rst>`_ - Working with OVA images
 
 TODO
 ====
