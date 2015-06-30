@@ -222,7 +222,7 @@ setopts ${@}
 
 # Load config
 
-source config
+source config &>/dev/null
 
 echo "Logging enabled on ${LOG}"
 
