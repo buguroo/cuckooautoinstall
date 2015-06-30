@@ -219,6 +219,7 @@ Extra help
 
 You may want to read:
 
+* Script to create templates to use with VirtualBox to make vm detection harder: `https://github.com/nsmfoo/antivmdetection`
 * `Remote <./doc/Remote.rst>`_ - Enabling remote administration of VMS and VBox
 * `OVA <./doc/OVA.rst>`_ - Working with OVA images
 * `Pafish <./doc/Pafish.rst>`_ Pafish - Checking if your VM is detectable by malware
