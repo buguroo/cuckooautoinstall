@@ -214,6 +214,20 @@ Reload supervisor
   sudo supervisorctl reload
 
 
+iptables
+========
+
+As you probably have already noticed, iptables rules don't stay there after
+a reboot. If you want to make them persistent, we recommend 
+iptables-save & iptables-restore
+
+::
+
+    iptables-save > your_custom_iptables_rules
+    iptables-restore < your_custom_iptables_rules
+
+
+
 Extra help
 ==========
 
