@@ -102,13 +102,17 @@ clone_repos(){
     git clone ${YARA_REPO}
 }
 
+cdcuckoo(){
+    eval cd ~${CUCKOO_USER}
+}
+
 create_cuckoo_user(){
     $SUDO adduser  --disabled-password -gecos "" ${CUCKOO_USER}
     $SUDO usermod -G vboxusers ${CUCKOO_USER}
 }
 
 clone_cuckoo(){
-    cd ~${CUCKOO_USER}
+    cdcuckoo
     $SUDO git clone $CUCKOO_REPO
     $SUDO chown -R ${CUCKOO_USER}:${CUCKOO_USER} cuckoo
     cd $TMPDIR
@@ -127,7 +131,7 @@ setcap(){
 }
 
 fix_django_version(){
-    cd ~${CUCKOO_USER}
+    cdcuckoo
     python -c "import django; from distutils.version import LooseVersion; import sys; sys.exit(LooseVersion(django.get_version()) <= LooseVersion('1.5'))" && { 
         egrep -i "templates = \(.*\)" cuckoo/web/web/settings.py || $SUDO sed -i '/TEMPLATE_DIRS/{ N; s/.*/TEMPLATE_DIRS = \( \("templates"\),/; }' cuckoo/web/web/settings.py
     }
@@ -135,7 +139,7 @@ fix_django_version(){
 }
 
 enable_mongodb(){
-    cd ~${CUCKOO_USER}
+    cdcuckoo
     $SUDO sed -i '/\[mongodb\]/{ N; s/.*/\[mongodb\]\nenabled = yes/; }' cuckoo/conf/reporting.conf
     cd $TMPDIR
 }
