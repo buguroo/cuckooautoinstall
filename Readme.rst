@@ -200,7 +200,9 @@ Edit */etc/supervisor/conf.d/cuckoo.conf* , like
         [program:cuckoo-web]
         command=python web.py
         directory=/home/cuckoo/utils
-        user=cuckoo[program:cuckoo-api]
+        user=cuckoo
+
+        [program:cuckoo-api]
         command=python api.py
         directory=/home/cuckoo/utils
         user=cuckoo
@@ -219,12 +221,14 @@ You may want to read:
 
 * `Remote <./doc/Remote.rst>`_ - Enabling remote administration of VMS and VBox
 * `OVA <./doc/OVA.rst>`_ - Working with OVA images
+* `Pafish <./doc/Pafish.rst>`_ Pafish - Checking if your VM is detectable by malware
+* `VMcloak <./doc/Vmcloak.rst>`_ VMCloak - Cuckoo windows virtual machines management
 
 TODO
 ====
-* Add vmcloak info to docs: http://vmcloak.org/ Automated Virtual Machine Generation and Cloaking tailored for Cuckoo Sandbox.
-* Add Pafish info to docs: https://github.com/a0rtega/pafish The objective of this project is to collect usual tricks seen in malware samples. This allows us to study it, and test if our analysis environments are properly implemented.
-* Add hardening cuckoo info to docs
+
+* Improve pafish documentation on methods to avoid malware vm detection techniques
+* Improve documentation
 
 Contributing
 ============
