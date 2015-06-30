@@ -1,5 +1,23 @@
 #!/bin/bash
 
+# CuckooAutoInstall
+
+# Copyright (C) 2014-2015 David Reguera García - dreg@buguroo.com
+# Copyright (C) 2015 David Francos Cuartero - dfrancos@buguroo.com
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 source /etc/os-release
 
 # Configuration variables. You can override these in config.
@@ -24,10 +42,11 @@ declare -a python_packages
 packages["debian"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
 packages["ubuntu"]="python-pip python-sqlalchemy mongodb python-bson python-dpkt python-jinja2 python-magic python-gridfs python-libvirt python-bottle python-pefile python-chardet git build-essential autoconf automake libtool dh-autoreconf libcurl4-gnutls-dev libmagic-dev python-dev tcpdump libcap2-bin virtualbox dkms python-pyrex"
 python_packages=(pymongo django pydeep maec py3compat lxml cybox distorm3 pycrypto)
+
+# Pretty icons
 log_icon="\e[31m✓\e[0m"
 log_icon_ok="\e[32m✓\e[0m"
 log_icon_nok="\e[31m✗\e[0m"
-
 
 # -
 
