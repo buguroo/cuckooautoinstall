@@ -20,3 +20,7 @@ Improving vm detection
 https://github.com/nsmfoo/antivmdetection/blob/master/antivmdetect.py
 
 that creates a batch file and a shell script to make vm detection harder.
+
+VBoxHardenedLoader
+======================
+VirtualBox VM detection mitigation loader: https://github.com/hfiref0x/VBoxHardenedLoader
