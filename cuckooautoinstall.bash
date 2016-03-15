@@ -112,29 +112,38 @@ run_and_log(){
         _log_icon=$log_icon_ok
     } || {
         _log_icon=$log_icon_nok
+        exit_=1
     }
     echo -e "${_log_icon} ${2}"
+    [[ $exit_ ]] && { echo -e "\t -> ${_log_icon} $3";  exit; }
 }
 
 clone_repos(){
     git clone ${JANSSON_REPO}
     git clone ${YARA_REPO}
+    return 0
 }
 
 cdcuckoo(){
     eval cd ~${CUCKOO_USER}
+    return 0
 }
 
 create_cuckoo_user(){
     $SUDO adduser  --disabled-password -gecos "" ${CUCKOO_USER}
     $SUDO usermod -G vboxusers ${CUCKOO_USER}
+    return 0
 }
 
 clone_cuckoo(){
     cdcuckoo
     $SUDO git clone $CUCKOO_REPO
+    cd $CUCKOO_REPO
+    [[ $STABLE ]] && $SUDO git checkout 5231ff3a455e9c1c36239a025a1f6840029a9ed8
+    cd ..
     $SUDO chown -R ${CUCKOO_USER}:${CUCKOO_USER} cuckoo
     cd $TMPDIR
+    return 0
 }
 
 create_hostonly_iface(){
@@ -143,10 +152,12 @@ create_hostonly_iface(){
     $SUDO iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
     $SUDO iptables -A POSTROUTING -t nat -j MASQUERADE
     $SUDO sysctl -w net.ipv4.ip_forward=1
+    return 0
 }
 
 setcap(){
-    $SUDO setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
+    $SUDO /bin/bash -c 'setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump' 2>&/dev/null
+    return 0
 }
 
 fix_django_version(){
@@ -155,12 +166,14 @@ fix_django_version(){
         egrep -i "templates = \(.*\)" cuckoo/web/web/settings.py || $SUDO sed -i '/TEMPLATE_DIRS/{ N; s/.*/TEMPLATE_DIRS = \( \("templates"\),/; }' cuckoo/web/web/settings.py
     }
     cd $TMPDIR
+    return 0
 }
 
 enable_mongodb(){
     cdcuckoo
     $SUDO sed -i '/\[mongodb\]/{ N; s/.*/\[mongodb\]\nenabled = yes/; }' cuckoo/conf/reporting.conf
     cd $TMPDIR
+    return 0
 }
 
 build_jansson(){
@@ -172,6 +185,7 @@ build_jansson(){
     make check
     $SUDO make install
     cd ${TMPDIR}
+    return 0
 }
 
 build_yara(){
@@ -184,6 +198,7 @@ build_yara(){
     cd yara-python/
     $SUDO python setup.py install
     cd ${TMPDIR}
+    return 0
 }
 
 build_volatility(){
@@ -192,6 +207,7 @@ build_volatility(){
     cd volatility-2.4/
     $SUDO python setup.py build
     $SUDO python setup.py install
+    return 0
 }
 
 pip(){
@@ -199,12 +215,16 @@ pip(){
     # Unless we make all of this into a virtualenv, wich seems like the
     # correct way to follow
     for package in ${@}; do $SUDO pip install ${package} --upgrade; done
+    return 0
 }
 
 prepare_virtualbox(){
     cd ${TMPDIR}
     echo ${VIRTUALBOX_REP} |$SUDO tee /etc/apt/sources.list.d/virtualbox.list
     wget -O - https://www.virtualbox.org/download/oracle_vbox.asc | $SUDO apt-key add -
+    pgrep virtualbox && return 1
+    pgrep VBox && return 1 
+    return 0
 }
 
 install_packages(){
@@ -212,6 +232,7 @@ install_packages(){
     $SUDO apt-get install -y ${packages["${RELEASE}"]}
     $SUDO apt-get install -y $CUSTOM_PKGS
     $SUDO apt-get -y install 
+    return 0
 }
 
 # Init.
@@ -232,16 +253,17 @@ echo "Logging enabled on ${LOG}"
 }
 
 # Install packages
-run_and_log prepare_virtualbox "Getting virtualbox repo ready"
-run_and_log install_packages "Installing packages ${CUSTOM_PKGS} and ${packages[$RELEASE]}"
+run_and_log prepare_virtualbox "Getting virtualbox repo ready" "Virtualbox is running, please close it"
+run_and_log install_packages "Installing packages ${CUSTOM_PKGS} and ${packages[$RELEASE]}" "Something failed installing packages, please look at the log file"
 
 # Install python packages
-run_and_log pip ${python_packages[@]} "Installing python packages: ${python_packages[@]}"
+run_and_log pip ${python_packages[@]} "Installing python packages: ${python_packages[@]}" "Something failed install python packages, please look at the log file"
 
 # Create user and clone repos
-run_and_log create_cuckoo_user "Creating cuckoo user"
-run_and_log clone_repos "Cloning repositories"
-run_and_log clone_cuckoo "Cloning cuckoo repository"
+run_and_log create_cuckoo_user "Creating cuckoo user" "Could not create cuckoo user"
+run_and_log clone_repos "Cloning repositories" "Could not clone repos"
+run_and_log clone_cuckoo "Cloning cuckoo repository" "Failed"
+
 
 # Build packages
 [[ $UPGRADE == true ]] && {
