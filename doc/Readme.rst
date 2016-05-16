@@ -125,14 +125,6 @@ For most setups, --upgrade is recommended always.
 
 .. image:: /../screenshots/github%20cuckoo%20working.png?raw=true
 
-* Execute also webpy (default port 8080)
-
-::
-
-  cd ~cuckoo/cuckoo/utils
-  python web.py
-
-.. image:: /../screenshots/github%20webpy.png?raw=true
 
 * Execute also django using port 6969
 
@@ -205,11 +197,6 @@ Edit */etc/supervisor/conf.d/cuckoo.conf* , like
         command=python cuckoo.py
         directory=/home/cuckoo
         User=cuckoo
-
-        [program:cuckoo-web]
-        command=python web.py
-        directory=/home/cuckoo/utils
-        user=cuckoo
 
         [program:cuckoo-api]
         command=python api.py
