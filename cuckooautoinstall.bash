@@ -156,7 +156,7 @@ create_hostonly_iface(){
 }
 
 setcap(){
-    $SUDO /bin/bash -c 'setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump' 2>&/dev/null
+    $SUDO /bin/bash -c 'setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump' 2> /dev/null
     return 0
 }
 
@@ -235,6 +235,11 @@ install_packages(){
     return 0
 }
 
+install_python_packages(){
+    pip ${python_packages[@]}
+    return 0
+}
+
 # Init.
 
 print_copy
@@ -257,7 +262,7 @@ run_and_log prepare_virtualbox "Getting virtualbox repo ready" "Virtualbox is ru
 run_and_log install_packages "Installing packages ${CUSTOM_PKGS} and ${packages[$RELEASE]}" "Something failed installing packages, please look at the log file"
 
 # Install python packages
-run_and_log pip ${python_packages[@]} "Installing python packages: ${python_packages[@]}" "Something failed install python packages, please look at the log file"
+run_and_log install_python_packages "Installing python packages: ${python_packages[@]}" "Something failed install python packages, please look at the log file"
 
 # Create user and clone repos
 run_and_log create_cuckoo_user "Creating cuckoo user" "Could not create cuckoo user"
