@@ -156,7 +156,7 @@ create_hostonly_iface(){
 }
 
 setcap(){
-    $SUDO /bin/bash -c 'setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump' 2> /dev/null
+    $SUDO /bin/bash -c 'setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump' 2 &> /dev/null
     return 0
 }
 
