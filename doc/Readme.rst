@@ -47,7 +47,7 @@ Quickstart guide
 
 
 If you trust us, your network setup and a lot of more variables enough
-(wich is totally not-recommended) and you're as lazy as it gets, you can
+(which is totally not-recommended) and you're as lazy as it gets, you can
 execute as a normal user if you've got sudo configured:
 
 ::
