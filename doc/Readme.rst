@@ -1,3 +1,8 @@
+.. warning::
+
+   This project is not maintained.
+
+
 About CuckooAutoinstall
 =======================
 
